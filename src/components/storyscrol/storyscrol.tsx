@@ -192,6 +192,14 @@ const FlowSection: React.FC<{ data: SectionData }> = ({ data }) => (
       {/* Kenar çizgisi */}
       <div className="absolute inset-0 rounded-sm ring-1 ring-white/8 pointer-events-none" />
 
+      {/* Logo — sağ üst köşe */}
+      <img
+        src="/logo/baburlogo.png"
+        alt="Babur Mobilya"
+        className="absolute top-4 right-4 md:top-6 md:right-6 z-10 pointer-events-none select-none"
+        style={{ height: 'clamp(28px, 3vw, 44px)', width: 'auto', objectFit: 'contain' }}
+      />
+
       {/* İçerik */}
       <div className="relative flex flex-col justify-between h-full p-6 md:p-12">
         {/* Üst */}
@@ -226,10 +234,10 @@ const FlowSection: React.FC<{ data: SectionData }> = ({ data }) => (
 
         {/* Alt */}
         <div className="flex items-center justify-between">
-          <span className="text-[9px] tracking-[0.5em] uppercase text-white/20">
+          <span className="text-[9px] tracking-[0.5em] uppercase text-white/55">
             Babur Mobilya
           </span>
-          <span className="text-[9px] tracking-[0.4em] uppercase text-white/15">
+          <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">
             Est. 2010
           </span>
         </div>

@@ -55,6 +55,7 @@ export default function SSS() {
   return (
     <section
       className="w-full"
+      data-light-nav
       style={{ background: '#f0ece6', fontFamily: "var(--font-poppins)" }}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">

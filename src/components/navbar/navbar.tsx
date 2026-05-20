@@ -13,24 +13,28 @@ const navItems = [
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [scrolled, setScrolled] = useState(false);
+	const [lightBg, setLightBg] = useState(false);
 
 	useEffect(() => {
-		const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 2.5);
-		window.addEventListener("scroll", onScroll, { passive: true });
-		return () => window.removeEventListener("scroll", onScroll);
+		const check = () => {
+			const sections = document.querySelectorAll('[data-light-nav]');
+			let found = false;
+			sections.forEach(el => {
+				const rect = el.getBoundingClientRect();
+				// Navbar (top:20px, height:~60px) ile kesişiyor mu?
+				if (rect.top < 80 && rect.bottom > 20) found = true;
+			});
+			setLightBg(found);
+		};
+		check();
+		window.addEventListener('scroll', check, { passive: true });
+		return () => window.removeEventListener('scroll', check);
 	}, []);
 
-	const navBg = scrolled
-		? "bg-white shadow-lg border-transparent"
-		: "bg-transparent border border-white/30";
-
-	const textColor = scrolled ? "text-gray-900" : "text-white";
-	const linkColor = scrolled ? "text-gray-700 hover:text-black" : "text-white/80 hover:text-white";
-	const ctaBg = scrolled
-		? "bg-gray-900 text-white hover:bg-black"
-		: "bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm";
-	const hamburgerColor = (scrolled || isOpen) ? "bg-black" : "bg-white";
+	const navBg = lightBg ? "bg-transparent border border-black/20" : "bg-transparent border border-white/20";
+	const linkColor = lightBg ? "text-gray-700 hover:text-black" : "text-white/80 hover:text-white";
+	const ctaBg = lightBg ? "bg-black/10 text-gray-900 hover:bg-black/20" : "bg-white/15 text-white hover:bg-white/25 backdrop-blur-sm";
+	const hamburgerColor = (isOpen || lightBg) ? "bg-black" : "bg-white";
 
 	return (
 		<>
@@ -38,14 +42,14 @@ export default function Navbar() {
 			<header className="fixed top-5 left-0 right-0 z-50 hidden md:flex justify-center px-6">
 				<nav className={`relative flex items-center justify-between w-full max-w-4xl rounded-full px-6 py-3 overflow-visible transition-all duration-500 ${navBg}`}>
 					{/* Genişlik placeholder — flex düzenini korur, yüksekliği etkilemez */}
-					<div className="w-[190px] shrink-0" />
+					<div className="w-47.5 shrink-0" />
 					<Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2">
 						<Image
 							src="/logo/baburlogo.png"
 							alt="Babür Mobilya"
 							width={190}
 							height={70}
-							className="object-contain h-[70px] w-auto"
+							className="object-contain h-17.5 w-auto"
 							priority
 						/>
 					</Link>
@@ -87,11 +91,11 @@ export default function Navbar() {
 					<button
 						onClick={() => setIsOpen(!isOpen)}
 						aria-label="Menüyü aç/kapat"
-						className="w-10 h-10 flex flex-col justify-center items-center gap-[5px]"
+						className="w-10 h-10 flex flex-col justify-center items-center gap-1.25"
 					>
-						<span className={`block h-[2px] w-6 transition-all duration-300 origin-center ${hamburgerColor} ${isOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-						<span className={`block h-[2px] w-6 transition-all duration-300 ${hamburgerColor} ${isOpen ? "opacity-0 scale-x-0" : ""}`} />
-						<span className={`block h-[2px] w-6 transition-all duration-300 origin-center ${hamburgerColor} ${isOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+						<span className={`block h-0.5 w-6 transition-all duration-300 origin-center ${hamburgerColor} ${isOpen ? "rotate-45 translate-y-1.75" : ""}`} />
+						<span className={`block h-0.5 w-6 transition-all duration-300 ${hamburgerColor} ${isOpen ? "opacity-0 scale-x-0" : ""}`} />
+						<span className={`block h-0.5 w-6 transition-all duration-300 origin-center ${hamburgerColor} ${isOpen ? "-rotate-45 -translate-y-1.75" : ""}`} />
 					</button>
 				</div>
 			</div>

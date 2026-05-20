@@ -227,7 +227,7 @@ export default function ScrolVideo() {
                   style={{
                     fontSize: "clamp(0.72rem,1vw,0.88rem)",
                     letterSpacing: "0.02em",
-                    color: "rgba(235,225,210,0.45)",
+                    color: "rgba(235,225,210,0.72)",
                   }}
                 >
                   El işçiliği ve modern tasarımın buluştuğu,
@@ -295,7 +295,7 @@ function PillButton() {
         animate={{ scale: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
         transition={{ duration: 0.38, ease: [0.76, 0, 0.24, 1] }}
       />
-      <span className="relative z-10">Koleksiyonu Keşfet</span>
+      <span className="relative z-10 whitespace-nowrap">Koleksiyonu Keşfet</span>
       <motion.span className="relative z-10 inline-flex" animate={{ x: hovered ? 4 : 0 }} transition={{ duration: 0.3 }}>
         <ArrowRight size={13} strokeWidth={1.5} />
       </motion.span>

@@ -176,6 +176,7 @@ export default function TextSection() {
       {/* Ana section */}
       <section
         ref={ref}
+        data-light-nav
         className="relative bg-white w-full px-6 md:px-16 lg:px-24 py-24 md:py-32 overflow-hidden"
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
@@ -262,12 +263,6 @@ export default function TextSection() {
         </div>
       </section>
 
-      <style jsx global>{`
-        @keyframes marquee {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </div>
   );
 }

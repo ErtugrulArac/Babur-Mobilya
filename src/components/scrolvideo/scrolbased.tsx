@@ -218,7 +218,7 @@ const ScrollExpandMedia = ({
               <div className={`flex items-center justify-center text-center gap-2 w-full relative z-10 transition-none flex-col ${textBlend ? 'mix-blend-difference' : 'mix-blend-normal'}`}>
                 {logoSrc ? (
                   <img src={logoSrc} alt="Logo" className="object-contain transition-none"
-                    style={{ maxHeight: 'clamp(60px,12vw,140px)', maxWidth: '60vw', transform: `translateX(-${textTranslateX}vw)`, filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+                    style={{ maxHeight: 'clamp(60px,12vw,140px)', maxWidth: '60vw', transform: `translateX(-${textTranslateX}vw)`, opacity: 1 }} />
                 ) : (
                   <>
                     <h2 className="font-normal text-white transition-none"

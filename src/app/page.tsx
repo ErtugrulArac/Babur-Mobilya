@@ -6,6 +6,8 @@ import ScrollExpandMedia from "@/components/scrolvideo/scrolbased";
 import TextSection from "@/components/textkısmı/text";
 import Text2 from "@/components/textkısmı/text2";
 import SSS from "@/components/sss/sss";
+import Yorumlar from "@/components/müşteriyorumları/yorumlar";
+import Footer from "@/components/footer/footer";
 
 function ChapterBreak({ number, label }: { number: string; label: string }) {
   return (
@@ -71,6 +73,8 @@ export default function Home() {
         </div>
       </ScrollExpandMedia>
       <SSS />
+      <Yorumlar />
+      <Footer />
     </div>
   );
 }
