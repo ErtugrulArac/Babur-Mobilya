@@ -148,7 +148,7 @@ export default function SSS() {
 }
 
 function FaqRow({
-  faq, index, isOpen, onToggle, last,
+  faq, isOpen, onToggle, last,
 }: {
   faq: typeof FAQS[0];
   isOpen: boolean;
