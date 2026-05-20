@@ -141,6 +141,19 @@ export default function Yorumlar() {
   const [cardSize, setCardSize] = useState(340);
   const [testimonialsList, setTestimonialsList] = useState(testimonials);
 
+  const touchStartX = React.useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      handleMove(diff > 0 ? 1 : -1);
+    }
+  };
+
   const handleMove = (steps: number) => {
     const newList = [...testimonialsList];
     if (steps > 0) {
@@ -211,7 +224,12 @@ export default function Yorumlar() {
       </div>
 
       {/* Kartlar */}
-      <div className="relative" style={{ height: 560 }}>
+      <div
+        className="relative"
+        style={{ height: 560 }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {testimonialsList.map((testimonial, index) => {
           const position = testimonialsList.length % 2
             ? index - (testimonialsList.length + 1) / 2

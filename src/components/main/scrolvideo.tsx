@@ -276,7 +276,7 @@ function PillButton() {
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileTap={{ scale: 0.97 }}
-      className="relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 rounded-full cursor-pointer"
+      className="relative overflow-hidden inline-flex items-center justify-center gap-3 px-10 py-4 rounded-full cursor-pointer"
       style={{
         border: "1px solid rgba(235,225,210,0.3)",
         color: hovered ? "#1a1410" : "rgba(235,225,210,0.8)",

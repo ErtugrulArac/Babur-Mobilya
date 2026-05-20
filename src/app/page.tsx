@@ -11,7 +11,7 @@ import Footer from "@/components/footer/footer";
 
 function ChapterBreak({ number, label }: { number: string; label: string }) {
   return (
-    <div className="bg-black flex items-center justify-center py-14 select-none">
+    <div className="bg-black flex items-center justify-center py-8 select-none">
       <div className="flex items-center gap-5">
         <div className="w-10 h-px bg-white/10" />
         <span className="text-[9px] tracking-[0.55em] uppercase text-white/20">{number}</span>
