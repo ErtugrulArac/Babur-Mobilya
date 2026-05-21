@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motio
 import { ArrowUpRight, Armchair, BarChart2, Layers, Sparkles, ShieldCheck, Truck, Wrench, Leaf } from "lucide-react";
 
 const TOTAL_FRAMES = 193;
-const SCROLL_HEIGHT = "560vh";
 
 const BOX_DARK: React.CSSProperties = {
   background: "rgba(8,8,8,0.90)",
@@ -156,8 +155,10 @@ export default function Ofis() {
     return () => window.removeEventListener("mousemove", onMove);
   }, [isMobile, rawX, rawY]);
 
+  const scrollHeight = isMobile ? "340vh" : "560vh";
+
   return (
-    <section ref={sectionRef} style={{ height: SCROLL_HEIGHT }}>
+    <section ref={sectionRef} style={{ height: scrollHeight }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-black">
 
         {/* Canvas */}
