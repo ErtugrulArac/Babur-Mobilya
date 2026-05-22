@@ -133,6 +133,26 @@ export default function Hakkimizda() {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(rafRef.current); };
   }, []);
 
+  /* navbar renk sinyali — siyah kart açıkken beyaz navbar */
+  useEffect(() => {
+    const onScroll = () => {
+      if (!containerRef.current) return;
+      const total = containerRef.current.offsetHeight - window.innerHeight;
+      const p = Math.min(Math.max(-containerRef.current.getBoundingClientRect().top / total, 0), 1);
+      // ~%15'ten sonra siyah kart ekrana gelmiş — navbar beyaz olsun
+      const isDark = p > 0.12 && p < 0.96;
+      if (document.body.dataset.navbarDark !== (isDark ? "1" : "0")) {
+        document.body.dataset.navbarDark = isDark ? "1" : "0";
+        window.dispatchEvent(new CustomEvent("navbar-check"));
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      delete document.body.dataset.navbarDark;
+    };
+  }, []);
+
   /* scroll timeline */
   useEffect(() => {
     const mobile = window.innerWidth < 768;
@@ -189,7 +209,7 @@ export default function Hakkimizda() {
   }, []);
 
   return (
-    <div style={{ background: "#f5f0ea" }}>
+    <div data-light-nav style={{ background: "#f5f0ea" }}>
       {/* Navbar ayrı stacking context'te — GSAP pin'i tarafından bloklanmaz */}
       <div style={{ position: "relative", zIndex: 9999 }}>
         <Navbar />
@@ -236,17 +256,18 @@ export default function Hakkimizda() {
 
         {/* ── CTA (SON SAHNE) ─────────────────────────── */}
         <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-6 pointer-events-auto">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6 tracking-tight text-silver-warm"
-            style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold mb-6 tracking-tight text-silver-warm"
+            style={{ fontFamily: "var(--font-general)" }}>
             Bir çaya ne dersiniz?
           </h2>
           <p className="text-base md:text-xl mb-10 max-w-xl mx-auto font-light leading-relaxed"
-            style={{ color: "rgba(26,23,18,0.55)", fontFamily: "var(--font-poppins)" }}>
+            style={{ color: "rgba(26,23,18,0.55)", fontFamily: "var(--font-general)" }}>
             Mekanınızı, hayalinizi ve beklentilerinizi birlikte konuşalım.
             Ücretsiz keşif ve tasarım danışmanlığı sunuyoruz.
           </p>
           <a href="/iletisim"
-            className="btn-cream inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-medium">
+            className="btn-cream inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-semibold"
+            style={{ fontFamily: "var(--font-general)" }}>
             Randevu Al
             <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
               <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -263,7 +284,8 @@ export default function Hakkimizda() {
           >
             <div className="card-sheen" aria-hidden />
 
-            <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center z-10 py-3 lg:py-0 gap-2 lg:gap-16">
+            <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center z-10 py-3 lg:py-0 gap-2 lg:gap-16"
+              style={{ fontFamily: "var(--font-general)" }}>
 
               {/* SAĞ — Misyon */}
               <div className="card-right-text gsap-reveal order-1 lg:order-3 flex flex-col justify-center text-center lg:text-right z-20 w-full">
@@ -271,8 +293,8 @@ export default function Hakkimizda() {
                   style={{ color: "rgba(201,168,122,0.5)", fontFamily: "var(--font-poppins)" }}>
                   Misyonumuz
                 </p>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight mb-4 text-card-cream"
-                  style={{ fontFamily: "var(--font-display)" }}>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight mb-4 text-card-cream"
+                  style={{ fontFamily: "var(--font-general)" }}>
                   Yalnızca Sizin İçin.
                 </h2>
                 <p className="text-sm font-light leading-relaxed"
@@ -283,7 +305,7 @@ export default function Hakkimizda() {
               </div>
 
               {/* MERKEZ — Art Gallery tarih görseli */}
-              <div className="art-scroll-wrap order-2 relative w-full h-40 lg:h-130 flex flex-col items-center justify-center z-10 gap-0"
+              <div className="art-scroll-wrap order-2 relative w-full h-24 lg:h-130 flex flex-col items-center justify-center z-10 gap-0"
                 style={{ perspective: "1000px" }}>
                 <div ref={artRef} className="flex flex-col items-center w-full" style={{ transformStyle: "preserve-3d" }}>
 
@@ -291,8 +313,8 @@ export default function Hakkimizda() {
                   <div className="relative select-none leading-none text-center"
                     style={{
                       fontSize: "clamp(5rem,18vw,14rem)",
-                      fontFamily: "var(--font-poppins)",
-                      fontWeight: 800,
+                      fontFamily: "var(--font-general)",
+                      fontWeight: 700,
                       letterSpacing: "-0.04em",
                       WebkitTextStroke: "1px rgba(201,168,122,0.55)",
                       color: "transparent",
@@ -323,8 +345,8 @@ export default function Hakkimizda() {
                   style={{ color: "rgba(201,168,122,0.5)", fontFamily: "var(--font-poppins)" }}>
                   Vizyonumuz
                 </p>
-                <h3 className="text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight mb-4 text-card-cream"
-                  style={{ fontFamily: "var(--font-display)" }}>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight mb-4 text-card-cream"
+                  style={{ fontFamily: "var(--font-general)" }}>
                   Kalıcı Güzellik.
                 </h3>
                 <p className="text-sm font-light leading-relaxed"

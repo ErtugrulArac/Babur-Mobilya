@@ -17,18 +17,24 @@ export default function Navbar() {
 
 	useEffect(() => {
 		const check = () => {
+			// dark-forced flag varsa (GSAP siyah kart açık) — beyaz navbar
+			if (document.body.dataset.navbarDark === "1") { setLightBg(false); return; }
+
 			const sections = document.querySelectorAll('[data-light-nav]');
 			let found = false;
 			sections.forEach(el => {
 				const rect = el.getBoundingClientRect();
-				// Navbar (top:20px, height:~60px) ile kesişiyor mu?
 				if (rect.top < 80 && rect.bottom > 20) found = true;
 			});
 			setLightBg(found);
 		};
 		check();
 		window.addEventListener('scroll', check, { passive: true });
-		return () => window.removeEventListener('scroll', check);
+		window.addEventListener('navbar-check', check);
+		return () => {
+			window.removeEventListener('scroll', check);
+			window.removeEventListener('navbar-check', check);
+		};
 	}, []);
 
 	const navBg = lightBg ? "bg-transparent border border-black/20" : "bg-transparent border border-white/20";
@@ -59,7 +65,8 @@ export default function Navbar() {
 							<Link
 								key={item.href}
 								href={item.href}
-								className={`text-sm transition-colors duration-500 ${linkColor}`}
+								className={`text-sm font-semibold transition-colors duration-500 ${linkColor}`}
+								style={{ fontFamily: "var(--font-general)", letterSpacing: "0.01em" }}
 							>
 								{item.heading}
 							</Link>
@@ -68,7 +75,8 @@ export default function Navbar() {
 
 					<Link
 						href="/iletisim"
-						className={`text-sm font-medium px-5 py-2 rounded-full transition-all duration-500 ${ctaBg}`}
+						className={`text-sm font-bold px-5 py-2 rounded-full transition-all duration-500 ${ctaBg}`}
+						style={{ fontFamily: "var(--font-general)", letterSpacing: "0.01em" }}
 					>
 						İletişim
 					</Link>
