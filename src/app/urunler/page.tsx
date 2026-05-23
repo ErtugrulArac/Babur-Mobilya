@@ -1,366 +1,333 @@
 "use client";
 
 import * as React from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"] });
+import { Ruler, PenLine, Hammer, PackageCheck } from "lucide-react";
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/footer/footer";
 import UrunDetay from "@/components/urun-detay/urun-detay";
+import SmoothScrollReveal from "@/components/smooth-scroll-reveal/smooth-scroll-reveal";
 
+const CATEGORIES = [
+  { id: 1, src: "/deneme1.webp",   label: "Mutfak",  sub: "Yerleşik Sistemler" },
+  { id: 2, src: "/deneme2.webp",   label: "Ofis",    sub: "Kurumsal Üniteler"  },
+  { id: 3, src: "/deneme3.webp",   label: "Vitrin",  sub: "Medya Sistemleri"   },
+  { id: 4, src: "/arkaplan2.webp", label: "Masa",    sub: "Oturma Grupları"    },
+];
 
-function cn(...classes: Array<string | undefined | null | false>) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export type CardStackItem = {
-  id: string | number;
-  title: string;
-  description?: string;
-  imageSrc?: string;
-  href?: string;
-  ctaLabel?: string;
-  tag?: string;
-};
-
-export type CardStackProps<T extends CardStackItem> = {
-  items: T[];
-  initialIndex?: number;
-  maxVisible?: number;
-  cardWidth?: number;
-  cardHeight?: number;
-  overlap?: number;
-  spreadDeg?: number;
-  perspectivePx?: number;
-  depthPx?: number;
-  tiltXDeg?: number;
-  activeLiftPx?: number;
-  activeScale?: number;
-  inactiveScale?: number;
-  springStiffness?: number;
-  springDamping?: number;
-  loop?: boolean;
-  autoAdvance?: boolean;
-  intervalMs?: number;
-  pauseOnHover?: boolean;
-  showDots?: boolean;
-  className?: string;
-  onChangeIndex?: (index: number, item: T) => void;
-  renderCard?: (item: T, state: { active: boolean }) => React.ReactNode;
-};
-
-function wrapIndex(n: number, len: number) {
-  if (len <= 0) return 0;
-  return ((n % len) + len) % len;
-}
-
-function signedOffset(i: number, active: number, len: number, loop: boolean) {
-  const raw = i - active;
-  if (!loop || len <= 1) return raw;
-  const alt = raw > 0 ? raw - len : raw + len;
-  return Math.abs(alt) < Math.abs(raw) ? alt : raw;
-}
-
-export function CardStack<T extends CardStackItem>({
-  items,
-  initialIndex = 0,
-  maxVisible = 7,
-  cardWidth = 520,
-  cardHeight = 320,
-  overlap = 0.48,
-  spreadDeg = 48,
-  perspectivePx = 1100,
-  depthPx = 140,
-  tiltXDeg = 12,
-  activeLiftPx = 22,
-  activeScale = 1.03,
-  inactiveScale = 0.94,
-  springStiffness = 280,
-  springDamping = 28,
-  loop = true,
-  autoAdvance = false,
-  intervalMs = 2800,
-  pauseOnHover = true,
-  showDots = true,
-  className,
-  onChangeIndex,
-  renderCard,
-}: CardStackProps<T>) {
-  const reduceMotion = useReducedMotion();
-  const len = items.length;
-  const [active, setActive] = React.useState(() => wrapIndex(initialIndex, len));
-  const [hovering, setHovering] = React.useState(false);
-
-  React.useEffect(() => { setActive((a) => wrapIndex(a, len)); }, [len]);
-  React.useEffect(() => {
-    if (!len) return;
-    onChangeIndex?.(active, items[active]!);
-  }, [active]); // eslint-disable-line
-
-  const maxOffset = Math.max(0, Math.floor(maxVisible / 2));
-  const cardSpacing = Math.max(10, Math.round(cardWidth * (1 - overlap)));
-  const stepDeg = maxOffset > 0 ? spreadDeg / maxOffset : 0;
-  const canGoPrev = loop || active > 0;
-  const canGoNext = loop || active < len - 1;
-
-  const prev = React.useCallback(() => {
-    if (!len || !canGoPrev) return;
-    setActive((a) => wrapIndex(a - 1, len));
-  }, [canGoPrev, len]);
-
-  const next = React.useCallback(() => {
-    if (!len || !canGoNext) return;
-    setActive((a) => wrapIndex(a + 1, len));
-  }, [canGoNext, len]);
-
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
-  };
-
-  React.useEffect(() => {
-    if (!autoAdvance || reduceMotion || !len || (pauseOnHover && hovering)) return;
-    const id = window.setInterval(() => {
-      if (loop || active < len - 1) next();
-    }, Math.max(700, intervalMs));
-    return () => window.clearInterval(id);
-  }, [autoAdvance, intervalMs, hovering, pauseOnHover, reduceMotion, len, loop, active, next]);
-
-  if (!len) return null;
-  const activeItem = items[active]!;
-
-  return (
-    <div className={cn("w-full", className)}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}>
-      <div className="relative w-full" style={{ height: Math.max(380, cardHeight + 80) }}
-        tabIndex={0} onKeyDown={onKeyDown}>
-        <div className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-48 w-[70%] rounded-full bg-black/5 blur-3xl dark:bg-white/5" aria-hidden />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-40 w-[76%] rounded-full bg-black/10 blur-3xl dark:bg-black/30" aria-hidden />
-        <div className="absolute inset-0 flex items-end justify-center" style={{ perspective: `${perspectivePx}px` }}>
-          <AnimatePresence initial={false}>
-            {items.map((item, i) => {
-              const off = signedOffset(i, active, len, loop);
-              const abs = Math.abs(off);
-              if (abs > maxOffset) return null;
-              const rotateZ = off * stepDeg;
-              const x = off * cardSpacing;
-              const y = abs * 10;
-              const z = -abs * depthPx;
-              const isActive = off === 0;
-              const scale = isActive ? activeScale : inactiveScale;
-              const lift = isActive ? -activeLiftPx : 0;
-              const rotateX = isActive ? 0 : tiltXDeg;
-              const zIndex = 100 - abs;
-              const dragProps = isActive ? {
-                drag: "x" as const,
-                dragConstraints: { left: 0, right: 0 },
-                dragElastic: 0.18,
-                onDragEnd: (_e: any, info: { offset: { x: number }; velocity: { x: number } }) => {
-                  if (reduceMotion) return;
-                  const travel = info.offset.x;
-                  const v = info.velocity.x;
-                  const threshold = Math.min(160, cardWidth * 0.22);
-                  if (travel > threshold || v > 650) prev();
-                  else if (travel < -threshold || v < -650) next();
-                },
-              } : {};
-              return (
-                <motion.div key={item.id}
-                  className={cn("absolute bottom-0 rounded-2xl border-4 border-black/10 dark:border-white/10 overflow-hidden shadow-xl will-change-transform select-none",
-                    isActive ? "cursor-grab active:cursor-grabbing" : "cursor-pointer")}
-                  style={{ width: cardWidth, height: cardHeight, zIndex, transformStyle: "preserve-3d" }}
-                  initial={reduceMotion ? false : { opacity: 0, y: y + 40, x, rotateZ, rotateX, scale }}
-                  animate={{ opacity: 1, x, y: y + lift, rotateZ, rotateX, scale }}
-                  transition={{ type: "spring", stiffness: springStiffness, damping: springDamping }}
-                  onClick={() => setActive(i)}
-                  {...dragProps}>
-                  <div className="h-full w-full" style={{ transform: `translateZ(${z}px)`, transformStyle: "preserve-3d" }}>
-                    {renderCard ? renderCard(item, { active: isActive }) : <DefaultFanCard item={item} active={isActive} />}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
-      </div>
-      {showDots && (
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <div className="flex items-center gap-2">
-            {items.map((it, idx) => (
-              <button key={it.id} onClick={() => setActive(idx)}
-                className={cn("h-2 w-2 rounded-full transition",
-                  idx === active ? "bg-foreground" : "bg-foreground/30 hover:bg-foreground/50")}
-                aria-label={`Go to ${it.title}`} />
-            ))}
-          </div>
-          {activeItem.href && (
-            <Link href={activeItem.href} target="_blank" rel="noreferrer"
-              className="text-muted-foreground hover:text-foreground transition" aria-label="Open link">
-              <SquareArrowOutUpRight className="h-4 w-4" />
-            </Link>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DefaultFanCard({ item }: { item: CardStackItem; active: boolean }) {
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute inset-0">
-        {item.imageSrc ? (
-          <img src={item.imageSrc} alt={item.title} className="h-full w-full object-cover" draggable={false} loading="eager" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-secondary text-sm text-muted-foreground">No image</div>
-        )}
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate text-lg font-semibold text-white">{item.title}</div>
-        {item.description && <div className="mt-1 line-clamp-2 text-sm text-white/80">{item.description}</div>}
-      </div>
-    </div>
-  );
-}
-
-/* ── Page ─────────────────────────────────────────────── */
-const ITEMS: CardStackItem[] = [
-  { id: 1, title: "Yerleşik Mutfak Sistemleri", imageSrc: "/deneme1.webp", href: "/iletisim", tag: "Mutfak" },
-  { id: 2, title: "Kurumsal & Ofis Üniteleri",  imageSrc: "/deneme2.webp", href: "/iletisim", tag: "Ofis" },
-  { id: 3, title: "Medya & Vitrin Sistemleri",  imageSrc: "/deneme3.webp", href: "/iletisim", tag: "Oturma Odası" },
-  { id: 4, title: "Masa & Oturma Grupları",     imageSrc: "/arkaplan2.webp", href: "/iletisim", tag: "Yemek Odası" },
+const SUREC = [
+  { icon: Ruler,        title: "Ölçüm & Keşif",   body: "Mekanınızı yerinde ziyaret ediyor, ihtiyaçlarınızı ve beklentilerinizi dinliyoruz." },
+  { icon: PenLine,      title: "Tasarım & Proje",  body: "Mimari çizimler ve görsellerle hayalinizdeki mobilyayı somutlaştırıyoruz." },
+  { icon: Hammer,       title: "Üretim",           body: "Seçkin malzemelerle, ustalarımızın elinde her detay özenle hayata geçirilir." },
+  { icon: PackageCheck, title: "Montaj & Teslim",  body: "Profesyonel montaj ve teslim garantisiyle projeyi tamamlıyoruz." },
 ];
 
 
-function useCardSize() {
-  const [cfg, setCfg] = React.useState({ w: 520, h: 320, spread: 48, overlap: 0.48, maxVisible: 7 });
-  React.useEffect(() => {
-    const update = () => {
-      const vw = window.innerWidth;
-      if (vw < 480) {
-        const w = vw - 32;
-        setCfg({ w, h: Math.round(w * 0.62), spread: 18, overlap: 0.72, maxVisible: 3 });
-      } else if (vw < 768) {
-        setCfg({ w: Math.min(380, vw - 40), h: 240, spread: 24, overlap: 0.65, maxVisible: 3 });
-      } else {
-        setCfg({ w: 520, h: 320, spread: 48, overlap: 0.48, maxVisible: 7 });
-      }
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return cfg;
-}
-
 export default function UrunlerPage() {
-  const cfg = useCardSize();
   const [activeProductId, setActiveProductId] = React.useState(1);
   const featuresRef = React.useRef<HTMLDivElement>(null);
+  const surecRef = React.useRef<HTMLDivElement>(null);
+  const surecInView = useInView(surecRef, { once: true, margin: "-100px" });
 
-  const handleChange = (_i: number, item: CardStackItem) => {
-    setActiveProductId(item.id as number);
-    setTimeout(() => featuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  const handleCategoryClick = (id: number) => {
+    setActiveProductId(id);
+    setTimeout(() => featuresRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
   };
 
   return (
-    <div data-light-nav style={{ background: "#d7d5d1" }}>
+    <div data-light-nav className={inter.className} style={{ background: "#d7d5d1", fontWeight: 500, letterSpacing: "-0.03em", lineHeight: 0.95 }}>
       <Navbar />
 
-      {/* ── Hero: Hizmetlerimiz ─────────────────────── */}
-      <section className="min-h-screen flex flex-col justify-between px-6 md:px-16 lg:px-24 pt-32 pb-12 md:pt-40 md:pb-16">
+      {/* ── Hero ────────────────────────────────────── */}
+      <section className="relative flex flex-col overflow-hidden min-h-dvh">
 
-        {/* Üst: etiket */}
-        <p style={{ fontFamily: "var(--font-general)", fontSize: "0.68rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "rgba(26,23,18,0.35)" }}>
-          Babür Mobilya — Hizmetler
-        </p>
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1 }} animate={{ scale: 1.06 }}
+          transition={{ duration: 20, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+          style={{ backgroundImage: "url('/kutuarkaplantahta.webp')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }}
+        />
 
-        {/* Orta: büyük başlık */}
-        <div className="flex-1 flex items-center">
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(4.5rem, 12vw, 13rem)",
-              fontWeight: 400,
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-              color: "rgba(26,23,18,0.88)",
-              maxWidth: "14ch",
-            }}>
-            Hizmet&shy;lerimiz
-          </h1>
+        <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-2 px-6 md:px-16 lg:px-24 pt-28 md:pt-36 pb-0 gap-6">
+
+          {/* Sol */}
+          <div className="flex flex-col justify-between pb-8">
+
+            <motion.span
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              style={{ fontFamily: "var(--font-general)", fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}
+            >
+              Est. 2010 · Babür Mobilya
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 56 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 55, damping: 18, delay: 0.35 }}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontStyle: "normal",
+                fontSize: "clamp(4.5rem, 11vw, 13rem)",
+                fontWeight: 400,
+                lineHeight: 0.87,
+                letterSpacing: "-0.03em",
+                color: "#ffffff",
+                margin: "clamp(2rem,4vw,4rem) 0",
+              }}
+            >
+              Hizmet-<br/>lerimiz
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-col gap-4"
+            >
+              <p style={{ fontFamily: "var(--font-general)", fontSize: "0.78rem", fontWeight: 300, color: "rgba(255,255,255,0.55)", lineHeight: 1.75, maxWidth: "38ch", margin: 0 }}>
+                Mutfaktan çalışma odasına, her mekan için özel tasarım.
+              </p>
+              <motion.div
+                whileHover={{ scale: 1.02 }} whileTap={{ y: 1, scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                style={{ width: "fit-content" }}
+              >
+                <Link href="/iletisim" className="group inline-flex items-center gap-3"
+                  style={{ fontFamily: "var(--font-general)", fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", color: "#d7d5d1", background: "#0a0806", padding: "13px 26px", borderRadius: 2, textDecoration: "none" }}>
+                  Bizimle Çalışın
+                  <svg width="13" height="10" viewBox="0 0 14 10" fill="none" className="transition-transform duration-300 group-hover:translate-x-1.5">
+                    <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Sağ: 2×2 grid — self-end ile alta yaslanır */}
+          <div className="grid grid-cols-2 gap-3 self-end pb-0">
+            {CATEGORIES.map((item, i) => (
+              <motion.button
+                key={item.id}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 75, damping: 20, delay: 0.45 + i * 0.08 }}
+                onClick={() => handleCategoryClick(item.id)}
+                className="relative overflow-hidden group text-left"
+                style={{ aspectRatio: "4 / 3", borderRadius: 6, outline: "none", border: activeProductId === item.id ? "2px solid rgba(255,255,255,0.7)" : "2px solid transparent", transition: "border-color 0.3s" }}
+              >
+                <img src={item.src} alt={item.label} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,8,6,0.68) 0%, rgba(10,8,6,0.05) 55%, transparent 100%)" }} />
+                {activeProductId === item.id && (
+                  <div className="absolute top-3 right-3 w-2 h-2 rounded-full" style={{ background: "rgba(255,255,255,0.9)" }} />
+                )}
+                <div className="absolute bottom-0 left-0 p-3">
+                  <span style={{ fontFamily: "var(--font-display)", fontStyle: "normal", fontSize: "clamp(0.95rem, 1.8vw, 1.2rem)", fontWeight: 400, color: "rgba(255,255,255,0.95)", lineHeight: 1, display: "block" }}>
+                    {item.label}
+                  </span>
+                  <span style={{ fontFamily: "var(--font-general)", fontSize: "0.56rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
+                    {item.sub}
+                  </span>
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </div>
 
-        {/* Alt: metin + buton — iki sütun */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-16">
-          <p
-            className="max-w-md leading-[1.85]"
-            style={{
-              fontFamily: "var(--font-general)",
-              fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)",
-              fontWeight: 300,
-              color: "rgba(26,23,18,0.52)",
-            }}>
-            Bir mekânın ruhu, içindeki her dokunuşta saklıdır.
-            Mutfaktan çalışma odasına, oturma grubundan vitrin
-            sistemlerine — mekanınızın kimliğini anlayan, onu
-            yansıtan mobilyalar tasarlıyoruz. Her ölçü sizi,
-            her desen hikâyenizi taşısın diye.
-          </p>
-
-          <Link
-            href="/iletisim"
-            className="group inline-flex items-center gap-3 shrink-0 self-start md:self-auto"
-            style={{
-              fontFamily: "var(--font-general)",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "rgba(26,23,18,0.75)",
-              borderBottom: "1px solid rgba(26,23,18,0.2)",
-              paddingBottom: "6px",
-              transition: "color 0.3s, border-color 0.3s",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.color = "rgba(26,23,18,1)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(26,23,18,0.7)";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.color = "rgba(26,23,18,0.75)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(26,23,18,0.2)";
-            }}>
-            Bizimle Çalışın
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* Alt bar */}
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.1 }}
+          className="relative z-10 flex items-center justify-between px-6 md:px-16 lg:px-24 py-4"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}
+        >
+          <div className="flex items-center gap-6 flex-wrap">
+            {CATEGORIES.map((cat) => (
+              <button key={cat.id} onClick={() => handleCategoryClick(cat.id)}
+                style={{ fontFamily: "var(--font-general)", fontSize: "0.62rem", letterSpacing: "0.1em", color: activeProductId === cat.id ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", padding: 0, transition: "color 0.25s" }}>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+          <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} className="hidden md:block">
+            <svg width="11" height="15" viewBox="0 0 12 16" fill="none">
+              <path d="M6 1v14M1 10l5 5 5-5" stroke="rgba(255,255,255,0.35)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </Link>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* ── CardStack ──────────────────────────────── */}
-      <div className="flex items-center justify-center overflow-hidden px-4 pb-28">
-        <div className="w-full max-w-2xl mx-auto">
-          <CardStack
-            items={ITEMS}
-            cardWidth={cfg.w}
-            cardHeight={cfg.h}
-            spreadDeg={cfg.spread}
-            overlap={cfg.overlap}
-            maxVisible={cfg.maxVisible}
-            onChangeIndex={handleChange}
-          />
-        </div>
-      </div>
+      {/* ── Smooth Scroll Reveal ──────────────────── */}
+      <SmoothScrollReveal />
 
-      {/* ── UrunDetay scroll ───────────────────────── */}
+      {/* ── Ürün Detay scroll ──────────────────────── */}
       <div ref={featuresRef}>
         <UrunDetay productId={activeProductId} />
       </div>
 
-      <Footer variant="light" />
+      {/* ── Süreç Adımları ────────────────────────── */}
+      <section
+        ref={surecRef}
+        style={{ background: "#d7d5d1", padding: "clamp(5rem,10vw,9rem) 0", overflow: "hidden" }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,4rem)" }}>
+
+          {/* Üst kısım: etiket + başlık */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "clamp(3rem,6vw,6rem)" }}>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={surecInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6 }}
+              style={{
+                fontFamily: "var(--font-general)",
+                fontSize: "0.65rem",
+                fontWeight: 500,
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "rgba(10,8,6,0.4)",
+              }}
+            >
+              Süreç
+            </motion.span>
+
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", flexWrap: "wrap" }}>
+              <motion.h2
+                initial={{ opacity: 0, y: 28 }}
+                animate={surecInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontStyle: "normal",
+                  fontSize: "clamp(2.4rem, 5vw, 4.5rem)",
+                  fontWeight: 400,
+                  letterSpacing: "-0.02em",
+                  color: "#0a0806",
+                  lineHeight: 0.95,
+                  margin: 0,
+                }}
+              >
+                Nasıl Çalışıyoruz?
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={surecInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                style={{
+                  fontFamily: "var(--font-general)",
+                  fontSize: "0.82rem",
+                  fontWeight: 300,
+                  color: "rgba(10,8,6,0.55)",
+                  lineHeight: 1.8,
+                  maxWidth: 320,
+                  margin: 0,
+                  flexShrink: 0,
+                }}
+              >
+                Fikirden teslimata her adımda<br />sizinle birlikte ilerliyoruz.
+              </motion.p>
+            </div>
+          </div>
+
+          {/* Ayırıcı çizgi */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={surecInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{ height: "1px", background: "rgba(10,8,6,0.15)", transformOrigin: "left", marginBottom: "clamp(3rem,5vw,5rem)" }}
+          />
+
+          {/* Staircase adımlar */}
+          <div className="flex flex-col md:flex-row" style={{ gap: "1.5rem", alignItems: "flex-start" }}>
+            {SUREC.map((step, i) => {
+              const staircaseClass = ["", "md:mt-24", "md:mt-48", "md:mt-72"][i];
+              const StepIcon = step.icon;
+              return (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 56 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ type: "spring", stiffness: 80, damping: 18, delay: i * 0.1 }}
+                  className={staircaseClass}
+                  style={{ flex: 1 }}
+                >
+                  {/* Üst çizgi + step no */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: "spring", stiffness: 90, damping: 20, delay: 0.08 + i * 0.1 }}
+                      style={{
+                        flex: 1,
+                        height: 1,
+                        background: "rgba(10,8,6,0.22)",
+                        transformOrigin: "left",
+                      }}
+                    />
+                    <span style={{
+                      fontFamily: "var(--font-general)",
+                      fontSize: "0.62rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.18em",
+                      color: "rgba(10,8,6,0.3)",
+                    }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* İkon badge */}
+                  <div style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 10,
+                    background: "rgba(10,8,6,0.07)",
+                    border: "1px solid rgba(10,8,6,0.13)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "1.5rem",
+                  }}>
+                    <StepIcon size={20} color="rgba(10,8,6,0.65)" strokeWidth={1.5} />
+                  </div>
+
+                  {/* Başlık */}
+                  <div style={{
+                    fontFamily: "var(--font-general)",
+                    fontSize: "clamp(1rem, 1.3vw, 1.1rem)",
+                    fontWeight: 600,
+                    color: "#0a0806",
+                    letterSpacing: "-0.01em",
+                    marginBottom: "0.65rem",
+                    lineHeight: 1.2,
+                  }}>
+                    {step.title}
+                  </div>
+
+                  {/* Açıklama */}
+                  <div style={{
+                    fontFamily: "var(--font-general)",
+                    fontSize: "0.79rem",
+                    fontWeight: 300,
+                    color: "rgba(10,8,6,0.52)",
+                    lineHeight: 1.85,
+                  }}>
+                    {step.body}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+
+      <Footer variant="dark" />
     </div>
   );
 }
