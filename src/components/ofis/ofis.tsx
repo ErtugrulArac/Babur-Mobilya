@@ -173,6 +173,10 @@ export default function Ofis() {
         </motion.div>
 
         <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+        {/* Mobilede son fazda yanlış frameları gizle */}
+        {isMobile && phase === 3 && (
+          <div className="absolute inset-0 bg-black/80 pointer-events-none" />
+        )}
         <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
           style={{ background: "linear-gradient(to bottom, transparent, #000)" }} />
 

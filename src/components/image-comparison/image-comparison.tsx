@@ -37,13 +37,24 @@ export const ImageComparison = ({ beforeImage, afterImage, altBefore = 'Before',
     return () => { window.removeEventListener('mouseup', stopDrag); };
   }, [stopDrag]);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDraggingRef.current) return;
+      e.preventDefault();
+      handleMove(e.touches[0].clientX);
+    };
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    return () => el.removeEventListener('touchmove', onTouchMove);
+  }, [handleMove]);
+
   return (
     <div
       ref={containerRef}
       className="relative w-full mx-auto select-none rounded-xl overflow-hidden shadow-2xl aspect-video"
       onMouseMove={(e) => handleMove(e.clientX)}
       onMouseLeave={stopDrag}
-      onTouchMove={(e) => handleMove(e.touches[0].clientX)}
       onTouchEnd={stopDrag}
     >
       {/* Before image — sets container height */}
