@@ -85,7 +85,7 @@ export default function Footer({ variant = "dark" }: { variant?: "dark" | "light
 							/>
 						</a>
 						<p className="max-w-sm text-sm font-light text-balance" style={{ color: tagline, lineHeight: 1.7 }}>
-							El işçiliği ve modern tasarımın kesişiminde, her mekâna anlam katan özel mobilya koleksiyonları. Est. 2010.
+							El işçiliği ve modern tasarımın kesişiminde, her mekâna anlam katan özel mobilya koleksiyonları. Est. 1970.
 						</p>
 						<div className="flex gap-2">
 							{socialLinks.map((item, i) => (

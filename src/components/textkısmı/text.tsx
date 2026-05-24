@@ -22,7 +22,7 @@ const STEPS = [
   },
 ];
 
-const MARQUEE_TEXT = 'BABUR MOBİLYA · EL İŞÇİLİĞİ · PREMİUM MALZEME · ÖZEL ÜRETİM · EST. 2010 · ';
+const MARQUEE_TEXT = 'BABUR MOBİLYA · EL İŞÇİLİĞİ · PREMİUM MALZEME · ÖZEL ÜRETİM · EST. 1970 · ';
 
 // ── Kelime kelime reveal ──────────────────────────────────────────────────────
 function WordReveal({ text, delay = 0, className = '', style = {} }: {

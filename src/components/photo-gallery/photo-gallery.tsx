@@ -101,7 +101,7 @@ export const PhotoGallery = ({ animationDelay = 0.5 }: { animationDelay?: number
       />
 
       <span style={{ fontFamily: "var(--font-general)", fontSize: "0.62rem", fontWeight: 500, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(10,8,6,0.35)", marginBottom: "1rem", display: "block" }}>
-        Est. 2010 · Babür Mobilya
+        Est. 1970 · Babur Mobilya
       </span>
 
       <h1 style={{ fontFamily: "var(--font-general)", fontSize: "clamp(3rem,7vw,6rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 0.95, color: "#0a0806", textAlign: "center", marginBottom: "clamp(2rem,4vw,3rem)" }}>
@@ -127,7 +127,7 @@ export const PhotoGallery = ({ animationDelay = 0.5 }: { animationDelay?: number
             <div className="flex md:hidden gap-3 overflow-x-auto px-6 pb-2 w-full snap-x snap-mandatory">
               {photos.map((photo) => (
                 <div key={photo.id} className="shrink-0 snap-center" style={{ width: 140, height: 140, borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.12)" }}>
-                  <img src={photo.src} alt="Babür Mobilya" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <img src={photo.src} alt="Babur Mobilya" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
               ))}
             </div>
@@ -142,7 +142,7 @@ export const PhotoGallery = ({ animationDelay = 0.5 }: { animationDelay?: number
                   variants={photoVariants}
                   custom={{ x: photo.x, y: photo.y, order: photo.order }}
                 >
-                  <Photo width={220} height={220} src={photo.src} alt="Babür Mobilya" direction={photo.direction} />
+                  <Photo width={220} height={220} src={photo.src} alt="Babur Mobilya" direction={photo.direction} />
                 </motion.div>
               ))}
             </div>

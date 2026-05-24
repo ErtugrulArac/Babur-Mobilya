@@ -122,7 +122,7 @@ export const ArcGalleryHero: React.FC<ArcGalleryHeroProps> = ({
               marginBottom: '1.5rem',
             }}
           >
-            Est. 2010 · Babür Mobilya
+            Est. 1970 · Babur Mobilya
           </span>
           <h1
             style={{

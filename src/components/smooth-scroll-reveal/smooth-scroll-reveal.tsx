@@ -13,7 +13,7 @@ const STATS = [
   { stat: "15+",  label: "Yıl Deneyim"       },
   { stat: "500+", label: "Tamamlanan Proje"   },
   { stat: "100%", label: "Yerli Üretim"       },
-  { stat: "2010", label: "'dan Beri"          },
+  { stat: "1970", label: "'dan Beri"          },
 ];
 
 const FEATURES = [
@@ -88,7 +88,7 @@ export default function SmoothScrollReveal({
                 color: "rgba(255,255,255,0.38)",
                 marginBottom: "1.5rem",
               }}>
-                Neden Babür Mobilya
+                Neden Babur Mobilya
               </span>
 
               <h2 style={{

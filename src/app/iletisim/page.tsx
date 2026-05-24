@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import {
 	AtSignIcon,
 	ChevronLeftIcon,
-	Grid2x2PlusIcon,
 	PhoneIcon,
 	SendIcon,
 	UserIcon,
@@ -27,9 +26,8 @@ export default function IletisimPage() {
 			{/* SOL — kodundan birebir, sadece metin değişti */}
 			<div className="bg-white relative hidden h-full flex-col border-r border-gray-100 p-10 lg:flex">
 				<div className="from-background absolute inset-0 z-10 bg-gradient-to-t to-transparent" />
-				<div className="z-10 flex items-center gap-2">
-					<Grid2x2PlusIcon className="size-6" />
-					<p className="text-xl font-semibold">Babür Mobilya</p>
+				<div className="z-10 flex items-center">
+					<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-16 w-auto" />
 				</div>
 				<div className="z-10 mt-auto">
 					<blockquote className="space-y-2">
@@ -38,7 +36,7 @@ export default function IletisimPage() {
 							Hayalinizdeki mobilya bir mesaj uzağınızda.&rdquo;
 						</p>
 						<footer className="font-mono text-sm font-semibold">
-							~ Babür Mobilya
+							~ Babur Mobilya
 						</footer>
 					</blockquote>
 				</div>
@@ -71,10 +69,9 @@ export default function IletisimPage() {
 					Ana Sayfa
 				</Link>
 
-				<div className="mx-auto space-y-4 sm:w-sm">
-					<div className="flex items-center gap-2 lg:hidden">
-						<Grid2x2PlusIcon className="size-6" />
-						<p className="text-xl font-semibold">Babür Mobilya</p>
+				<div className="mx-auto space-y-4 sm:w-sm pt-16 lg:pt-0">
+					<div className="flex items-center lg:hidden">
+						<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-14 w-auto" />
 					</div>
 
 					<div className="flex flex-col space-y-1">
@@ -91,6 +88,29 @@ export default function IletisimPage() {
 					<p className="text-muted-foreground mt-8 text-sm">
 						Bilgileriniz yalnızca sizinle iletişim kurmak için kullanılır.
 					</p>
+
+					<div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
+						<p className="px-4 pt-3 pb-2 text-xs font-medium text-muted-foreground uppercase tracking-widest">
+							Hızlı İletişim
+						</p>
+						{[
+							{ num: '+90 535 786 52 25', name: 'Suat Babur' },
+							{ num: '+90 533 717 02 39', name: 'Kamuran Babur' },
+							{ num: '+90 542 467 74 94', name: 'Özer Babur' },
+						].map(({ num, name }, i, arr) => (
+							<a
+								key={num}
+								href={`tel:${num.replace(/\s/g, '')}`}
+								className={`flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors${i < arr.length - 1 ? ' border-b border-gray-100' : ''}`}
+							>
+								<div>
+									<p className="text-sm font-medium text-foreground">{name}</p>
+									<p className="text-xs text-muted-foreground mt-0.5">{num}</p>
+								</div>
+								<PhoneIcon className="size-3.5 text-muted-foreground shrink-0" />
+							</a>
+						))}
+					</div>
 				</div>
 			</div>
 		</main>

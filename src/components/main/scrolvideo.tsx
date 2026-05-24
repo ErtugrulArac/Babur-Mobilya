@@ -177,7 +177,7 @@ export default function ScrolVideo() {
             >
               <span className="text-[8px] font-medium tracking-[0.55em] uppercase"
                 style={{ color: "rgba(235,225,210,0.45)" }}>
-                Est. 2010
+                Est. 1970
               </span>
               <div className="w-px h-16" style={{ background: "rgba(235,225,210,0.12)" }} />
               <span className="text-[7px] font-light tracking-[0.5em] uppercase"
@@ -196,7 +196,7 @@ export default function ScrolVideo() {
             >
               <p className="md:hidden text-[8px] font-medium tracking-[0.5em] uppercase mb-3"
                 style={{ color: "rgba(235,225,210,0.4)" }}>
-                Est. 2010
+                Est. 1970
               </p>
               <h1 className="leading-none">
                 <span

@@ -52,7 +52,7 @@ export default function Navbar() {
 					<Link href="/" className="absolute left-6 top-1/2 -translate-y-1/2">
 						<Image
 							src="/logo/baburlogo.png"
-							alt="Babür Mobilya"
+							alt="Babur Mobilya"
 							width={190}
 							height={70}
 							className="object-contain h-17.5 w-auto"
@@ -89,7 +89,7 @@ export default function Navbar() {
 					<Link href="/">
 						<Image
 							src="/logo/baburlogo.png"
-							alt="Babür Mobilya"
+							alt="Babur Mobilya"
 							width={110}
 							height={34}
 							className="object-contain h-7 w-auto"

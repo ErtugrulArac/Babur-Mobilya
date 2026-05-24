@@ -10,13 +10,13 @@ export const ShuffleHero = () => {
     <section className="w-full px-8 pt-32 md:pt-48 pb-12 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto">
       <div>
         <span className="block mb-4 text-sm md:text-base font-medium" style={{ color: "#0a0806" }}>
-          Est. 2010 · Babür Mobilya
+          Est. 1970 · Babur Mobilya
         </span>
         <h3 className="text-5xl md:text-7xl font-semibold" style={{ color: "#0a0806" }}>
           Hizmetlerimiz
         </h3>
         <p className="text-lg md:text-xl my-4 md:my-6" style={{ color: "#0a0806" }}>
-          Mutfaktan çalışma odasına, her mekan için özel tasarım. 2010'dan bu yana aynı özen, her projede.
+          Mutfaktan çalışma odasına, her mekan için özel tasarım. 1970'dan bu yana aynı özen, her projede.
         </p>
         <StarButton className="h-12 px-6 text-base">
           Bizimle Çalışın

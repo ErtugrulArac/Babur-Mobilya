@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Babür Mobilya",
+  title: "Babur Mobilya",
   description: "Evinizi Sanata Dönüştürün",
 };
 

@@ -238,7 +238,7 @@ const FlowSection: React.FC<{ data: SectionData }> = ({ data }) => (
             Babur Mobilya
           </span>
           <span className="text-[9px] tracking-[0.4em] uppercase text-white/40">
-            Est. 2010
+            Est. 1970
           </span>
         </div>
       </div>
