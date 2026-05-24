@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/loading-screen/loading-screen";
+import PageTransition from "@/components/page-transition/page-transition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <LoadingScreen />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

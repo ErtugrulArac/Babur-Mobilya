@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const WeaveSpinner = () => (
@@ -70,11 +71,29 @@ const WeaveSpinner = () => (
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true)
+  const pathname = usePathname()
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 2200)
-    return () => clearTimeout(t)
-  }, [])
+    setVisible(true)
+    let done = false
+    const hide = () => { if (!done) { done = true; setVisible(false) } }
+
+    const minTimer = setTimeout(() => {
+      if (document.readyState === 'complete') {
+        hide()
+      } else {
+        window.addEventListener('load', hide, { once: true })
+      }
+    }, 1000)
+
+    const maxTimer = setTimeout(hide, 5000)
+
+    return () => {
+      clearTimeout(minTimer)
+      clearTimeout(maxTimer)
+      window.removeEventListener('load', hide)
+    }
+  }, [pathname])
 
   return (
     <AnimatePresence>
