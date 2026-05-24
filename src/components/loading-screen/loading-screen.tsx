@@ -76,22 +76,44 @@ export default function LoadingScreen() {
   useEffect(() => {
     setVisible(true)
     let done = false
-    const hide = () => { if (!done) { done = true; setVisible(false) } }
+    let minPassed = false
+    let contentReady = false
 
-    const minTimer = setTimeout(() => {
-      if (document.readyState === 'complete') {
-        hide()
-      } else {
-        window.addEventListener('load', hide, { once: true })
+    const tryHide = () => {
+      if (minPassed && contentReady && !done) {
+        done = true
+        setVisible(false)
       }
+    }
+
+    // minimum süre
+    const minTimer = setTimeout(() => {
+      minPassed = true
+      tryHide()
     }, 1000)
 
-    const maxTimer = setTimeout(hide, 5000)
+    const markReady = () => {
+      contentReady = true
+      tryHide()
+    }
+
+    // ana sayfa: ScrolVideo'dan gelen sinyal
+    window.addEventListener('app-ready', markReady, { once: true })
+    // diğer sayfalar: tarayıcı load eventi
+    window.addEventListener('load', markReady, { once: true })
+    // SPA geçişleri: sayfa zaten yüklüyse hemen hazır say
+    if (document.readyState === 'complete') contentReady = true
+
+    // hard fallback
+    const maxTimer = setTimeout(() => {
+      if (!done) { done = true; setVisible(false) }
+    }, 5000)
 
     return () => {
       clearTimeout(minTimer)
       clearTimeout(maxTimer)
-      window.removeEventListener('load', hide)
+      window.removeEventListener('app-ready', markReady)
+      window.removeEventListener('load', markReady)
     }
   }, [pathname])
 
