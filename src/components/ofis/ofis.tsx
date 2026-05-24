@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight, Armchair, BarChart2, Layers, Sparkles, ShieldCheck, Truck, Wrench, Leaf } from "lucide-react";
 
-const TOTAL_FRAMES = 193;
+const TOTAL_FRAMES_DESKTOP = 193;
+const TOTAL_FRAMES_MOBILE  = 192;
 
 const BOX_DARK: React.CSSProperties = {
   background: "rgba(8,8,8,0.90)",
@@ -68,10 +69,11 @@ export default function Ofis() {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
 
-    const images: HTMLImageElement[] = new Array(TOTAL_FRAMES);
+    const totalFrames = mobile ? TOTAL_FRAMES_MOBILE : TOTAL_FRAMES_DESKTOP;
+    const images: HTMLImageElement[] = new Array(totalFrames);
     let loaded = 0;
-    const onLoad = () => { loaded++; if (loaded === 30) setFramesReady(true); };
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const onLoad = () => { loaded++; if (loaded === 1) setFramesReady(true); };
+    for (let i = 1; i <= totalFrames; i++) {
       const img = new Image();
       img.src = frameUrl(i, mobile);
       img.onload = onLoad;
@@ -96,6 +98,8 @@ export default function Ofis() {
     if (!ctx) return;
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
+
+    const totalFrames = framesRef.current.length;
 
     const drawFrame = (index: number) => {
       const img = framesRef.current[index];
@@ -131,7 +135,7 @@ export default function Ofis() {
         phaseTimerRef.current = setTimeout(() => setPhase(newPhase), 150);
       }
 
-      const idx = Math.floor(progress * (TOTAL_FRAMES - 1));
+      const idx = Math.floor(progress * (totalFrames - 1));
       if (idx !== currentFrameRef.current) {
         currentFrameRef.current = idx;
         if (rafRef.current) cancelAnimationFrame(rafRef.current);
@@ -168,15 +172,16 @@ export default function Ofis() {
       <div className="sticky top-0 overflow-hidden bg-black" style={{ height: "100dvh" }}>
 
         {/* Canvas */}
-        <motion.div className="absolute inset-0" style={{ x: canvasX, y: canvasY, scale: 1.04 }}>
+        <motion.div
+          className="absolute inset-0"
+          style={{ x: canvasX, y: canvasY, scale: 1.04 }}
+          animate={{ opacity: framesReady ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <canvas ref={canvasRef} className="w-full h-full" />
         </motion.div>
 
         <div className="absolute inset-0 bg-black/35 pointer-events-none" />
-        {/* Mobilede son fazda yanlış frameları gizle */}
-        {isMobile && phase === 3 && (
-          <div className="absolute inset-0 bg-black/80 pointer-events-none" />
-        )}
         <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
           style={{ background: "linear-gradient(to bottom, transparent, #000)" }} />
 
@@ -201,7 +206,6 @@ export default function Ofis() {
               >
                 <Armchair size={isMobile ? 16 : 20} strokeWidth={1.2} className="text-white/60" />
               </motion.div>
-
               <motion.h2
                 className="text-white font-bold leading-tight mb-3 md:mb-4"
                 style={{ fontSize: "clamp(1.3rem,4vw,2rem)" }}
@@ -210,7 +214,6 @@ export default function Ofis() {
               >
                 Ofis Mobilyası<br />Tasarım & Üretimi
               </motion.h2>
-
               <motion.p
                 className="text-white/45 leading-relaxed"
                 style={{ fontSize: "clamp(0.75rem,2.5vw,0.9rem)" }}
@@ -230,14 +233,8 @@ export default function Ofis() {
             <motion.div key="p1" className="absolute inset-0 pointer-events-none"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}>
-
-              {/* Sol / Üst */}
               <motion.div
-                className={`absolute ${
-                  isMobile
-                    ? "left-3 right-3 top-[14%] p-3"
-                    : "left-0 top-1/2 translate-y-[-62%] w-72 md:w-76 p-5 md:p-9"
-                }`}
+                className={`absolute ${isMobile ? "left-3 right-3 top-[14%] p-3" : "left-0 top-1/2 translate-y-[-62%] w-72 md:w-76 p-5 md:p-9"}`}
                 style={BOX_DARK}
                 initial={{ x: isMobile ? 0 : "-100%", y: isMobile ? -30 : 0, opacity: 0 }}
                 animate={{ x: 0, y: 0, opacity: 1 }}
@@ -248,25 +245,17 @@ export default function Ofis() {
                   style={{ border: "1px solid rgba(255,255,255,0.2)" }}>
                   <BarChart2 size={isMobile ? 12 : 18} strokeWidth={1.2} className="text-white/60" />
                 </div>
-                <h3 className="text-white font-bold leading-tight mb-1"
-                  style={{ fontSize: "clamp(0.9rem,3.5vw,1.8rem)" }}>
+                <h3 className="text-white font-bold leading-tight mb-1" style={{ fontSize: "clamp(0.9rem,3.5vw,1.8rem)" }}>
                   Çalışma Masası<br />& Depolama
                 </h3>
-                <p className="text-white/40 leading-snug"
-                  style={{ fontSize: "clamp(0.65rem,2vw,0.85rem)" }}>
+                <p className="text-white/40 leading-snug" style={{ fontSize: "clamp(0.65rem,2vw,0.85rem)" }}>
                   Masif ahşap ve metal kombinasyonuyla üretilen çalışma
                   masaları; kablo kanalları, gizli çekmeceler ve ergonomik
                   yükseklik ayarı ile birlikte tasarlanır.
                 </p>
               </motion.div>
-
-              {/* Sağ / Alt */}
               <motion.div
-                className={`absolute ${
-                  isMobile
-                    ? "left-3 right-3 bottom-[8%] p-3"
-                    : "right-0 top-1/2 translate-y-[-38%] w-72 md:w-76 p-5 md:p-9"
-                }`}
+                className={`absolute ${isMobile ? "left-3 right-3 bottom-[8%] p-3" : "right-0 top-1/2 translate-y-[-38%] w-72 md:w-76 p-5 md:p-9"}`}
                 style={BOX_LIGHT}
                 initial={{ x: isMobile ? 0 : "100%", y: isMobile ? 30 : 0, opacity: 0 }}
                 animate={{ x: 0, y: 0, opacity: 1 }}
@@ -277,12 +266,10 @@ export default function Ofis() {
                   style={{ border: "1px solid rgba(255,255,255,0.15)" }}>
                   <Sparkles size={isMobile ? 12 : 18} strokeWidth={1.2} className="text-white/60" />
                 </div>
-                <h3 className="text-white font-bold leading-tight mb-1"
-                  style={{ fontSize: "clamp(0.9rem,3.5vw,1.8rem)" }}>
+                <h3 className="text-white font-bold leading-tight mb-1" style={{ fontSize: "clamp(0.9rem,3.5vw,1.8rem)" }}>
                   Toplantı & Yönetici<br />Üniteleri
                 </h3>
-                <p className="text-white/40 leading-snug"
-                  style={{ fontSize: "clamp(0.65rem,2vw,0.85rem)" }}>
+                <p className="text-white/40 leading-snug" style={{ fontSize: "clamp(0.65rem,2vw,0.85rem)" }}>
                   Kurumsal kimliğinizi yansıtan toplantı masaları, yönetici
                   ofis üniteleri ve kabul alanı mobilyaları özel ölçü ve
                   malzeme seçimiyle üretilir.
@@ -311,7 +298,6 @@ export default function Ofis() {
                 İşin kalitesi,{" "}
                 <span className="text-white/40 font-light">mekanın kalitesinden</span> başlar.
               </motion.p>
-
               <div className="grid grid-cols-3 md:grid-cols-7 gap-0 w-full">
                 {[
                   { Icon: Layers,      title: "Ergonomi",          desc: "İnsan odaklı tasarım ve ayarlanabilir sistemler",  mobileVisible: true  },
@@ -345,11 +331,7 @@ export default function Ofis() {
           {phase === 3 && (
             <motion.div
               key="p3"
-              className={`absolute p-7 md:p-12 ${
-                isMobile
-                  ? "left-3 right-3 bottom-[8%]"
-                  : "right-0 top-1/2 -translate-y-1/2 max-w-sm"
-              }`}
+              className={`absolute p-7 md:p-12 ${isMobile ? "left-3 right-3 bottom-[8%]" : "right-0 top-1/2 -translate-y-1/2 max-w-sm"}`}
               style={BOX_GLASS}
               initial={{ x: isMobile ? 0 : "100%", y: isMobile ? 40 : 0, opacity: 0 }}
               animate={{ x: 0, y: 0, opacity: 1 }}
@@ -362,7 +344,6 @@ export default function Ofis() {
                 transition={{ delay: 0.3 }}>
                 <ArrowUpRight size={16} strokeWidth={1.2} className="text-white/60" />
               </motion.div>
-
               <motion.h3
                 className="text-white font-bold leading-tight mb-3 md:mb-4"
                 style={{ fontSize: "clamp(1.3rem,4vw,2.2rem)" }}
@@ -372,7 +353,6 @@ export default function Ofis() {
                 Çalışma Alanınızı<br />
                 <span className="text-white/40 font-light">Dönüştürelim</span>
               </motion.h3>
-
               <motion.p
                 className="text-white/40 leading-relaxed mb-5 md:mb-8"
                 style={{ fontSize: "clamp(0.75rem,2.2vw,0.9rem)" }}
@@ -381,7 +361,6 @@ export default function Ofis() {
               >
                 Ofis koleksiyonumuzu inceleyin, ücretsiz tasarım danışmanlığı için bize ulaşın.
               </motion.p>
-
               <motion.button
                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.62, duration: 0.5 }}

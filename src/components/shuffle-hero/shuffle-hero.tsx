@@ -22,7 +22,9 @@ export const ShuffleHero = () => {
           Bizimle Çalışın
         </StarButton>
       </div>
-      <ShuffleGrid />
+      <div className="hidden md:block">
+        <ShuffleGrid />
+      </div>
     </section>
   );
 };
@@ -81,9 +83,11 @@ const generateSquares = () => {
 
 const ShuffleGrid = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [squares, setSquares] = useState(generateSquares());
+  const [mounted, setMounted] = useState(false);
+  const [squares, setSquares] = useState<ReturnType<typeof generateSquares>>([]);
 
   useEffect(() => {
+    setMounted(true);
     shuffleSquares();
 
     return () => {
@@ -101,7 +105,7 @@ const ShuffleGrid = () => {
 
   return (
     <div className="grid grid-cols-4 grid-rows-4 h-[450px] gap-1">
-      {squares.map((sq) => sq)}
+      {mounted && squares.map((sq) => sq)}
     </div>
   );
 };

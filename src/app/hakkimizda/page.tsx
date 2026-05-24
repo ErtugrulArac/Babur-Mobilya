@@ -185,8 +185,6 @@ export default function Hakkimizda() {
           { y: 280, z: -500, rotationX: 45, rotationY: -25, autoAlpha: 0, scale: 0.6 },
           { y: 0, z: 0, rotationX: 0, rotationY: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 2.5 }, "-=0.8"
         )
-        .to(".progress-ring",    { strokeDashoffset: 80, duration: 2.5, ease: "power3.inOut" }, "-=1.5")
-        .fromTo(".art-stat",     { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, stagger: 0.15, ease: "power3.out", duration: 1 }, "-=2.0")
         .fromTo(".card-left-text",  { x: -50, autoAlpha: 0 },          { x: 0, autoAlpha: 1, ease: "power4.out", duration: 1.5 }, "-=1.2")
         .fromTo(".card-right-text", { x:  50, autoAlpha: 0, scale: 0.82 }, { x: 0, autoAlpha: 1, scale: 1, ease: "expo.out", duration: 1.5 }, "<")
         .to({}, { duration: 0.8 })

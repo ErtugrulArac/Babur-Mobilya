@@ -56,10 +56,10 @@ const CARDS = [
 ];
 
 const SUREC = [
-  { icon: Ruler,        title: "Ölçüm & Keşif",   body: "Mekanınızı yerinde ziyaret ediyor, ihtiyaçlarınızı ve beklentilerinizi dinliyoruz." },
-  { icon: PenLine,      title: "Tasarım & Proje",  body: "Mimari çizimler ve görsellerle hayalinizdeki mobilyayı somutlaştırıyoruz." },
-  { icon: Hammer,       title: "Üretim",           body: "Seçkin malzemelerle, ustalarımızın elinde her detay özenle hayata geçirilir." },
-  { icon: PackageCheck, title: "Montaj & Teslim",  body: "Profesyonel montaj ve teslim garantisiyle projeyi tamamlıyoruz." },
+  { icon: Ruler,        color: "#3b82f6", bg: "rgba(59,130,246,0.10)",  title: "Ölçüm & Keşif",   body: "Mekanınızı yerinde ziyaret ediyor, ihtiyaçlarınızı ve beklentilerinizi dinliyoruz." },
+  { icon: PenLine,      color: "#8b5cf6", bg: "rgba(139,92,246,0.10)",  title: "Tasarım & Proje",  body: "Mimari çizimler ve görsellerle hayalinizdeki mobilyayı somutlaştırıyoruz." },
+  { icon: Hammer,       color: "#f59e0b", bg: "rgba(245,158,11,0.10)",  title: "Üretim",           body: "Seçkin malzemelerle, ustalarımızın elinde her detay özenle hayata geçirilir." },
+  { icon: PackageCheck, color: "#10b981", bg: "rgba(16,185,129,0.10)", title: "Montaj & Teslim",  body: "Profesyonel montaj ve teslim garantisiyle projeyi tamamlıyoruz." },
 ];
 
 export default function UrunlerPage() {
@@ -95,7 +95,7 @@ export default function UrunlerPage() {
       {/* ── Hizmet Kartları ───────────────────────── */}
 
       {/* Mobile carousel */}
-      <div className="md:hidden" style={{ background: "#ffffff", paddingTop: "8rem", paddingBottom: "3rem" }}>
+      <div className="md:hidden" style={{ background: "#ffffff", paddingTop: "2rem", paddingBottom: "3rem" }}>
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}
@@ -275,7 +275,7 @@ export default function UrunlerPage() {
                   className={staircaseClass}
                   style={{ flex: 1 }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+                  <div className="hidden md:flex" style={{ alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
                     <motion.div
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
@@ -283,13 +283,10 @@ export default function UrunlerPage() {
                       transition={{ type: "spring", stiffness: 90, damping: 20, delay: 0.08 + i * 0.1 }}
                       style={{ flex: 1, height: 1, background: "rgba(10,8,6,0.22)", transformOrigin: "left" }}
                     />
-                    <span style={{ fontSize: "0.62rem", fontWeight: 500, letterSpacing: "0.18em", color: "rgba(10,8,6,0.3)" }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                   </div>
 
-                  <div style={{ width: 48, height: 48, borderRadius: 10, background: "rgba(10,8,6,0.07)", border: "1px solid rgba(10,8,6,0.13)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem" }}>
-                    <StepIcon size={20} color="rgba(10,8,6,0.65)" strokeWidth={1.5} />
+                  <div style={{ width: 48, height: 48, borderRadius: 10, background: "#000000", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem" }}>
+                    <StepIcon size={20} color="#ffffff" strokeWidth={1.5} />
                   </div>
 
                   <div style={{ fontSize: "clamp(1rem, 1.3vw, 1.1rem)", fontWeight: 600, color: "#0a0806", letterSpacing: "-0.03em", marginBottom: "0.65rem", lineHeight: 1.2 }}>

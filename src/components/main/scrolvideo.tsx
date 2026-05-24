@@ -54,7 +54,7 @@ export default function ScrolVideo() {
     setIsMobile(mobile);
     const images: HTMLImageElement[] = new Array(TOTAL_FRAMES);
     let loaded = 0;
-    const onLoad = () => { loaded++; if (loaded === 30) setFramesReady(true); };
+    const onLoad = () => { loaded++; if (loaded === 1) setFramesReady(true); };
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = frameUrl(i, mobile);
@@ -143,7 +143,12 @@ export default function ScrolVideo() {
       <div className="sticky top-0 overflow-hidden bg-black" style={{ height: "100dvh" }}>
 
         {/* Canvas */}
-        <motion.div className="absolute inset-0" style={{ x: canvasX, y: canvasY, scale: 1.04 }}>
+        <motion.div
+          className="absolute inset-0"
+          style={{ x: canvasX, y: canvasY, scale: 1.04 }}
+          animate={{ opacity: framesReady ? 1 : 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <canvas ref={canvasRef} className="w-full h-full" />
         </motion.div>
 
