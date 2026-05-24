@@ -8,6 +8,7 @@ import { CurvedNavbar } from "./sidebar";
 const navItems = [
 	{ heading: "Anasayfa", href: "/" },
 	{ heading: "Hizmetler", href: "/urunler" },
+	{ heading: "Süreç", href: "/surec" },
 	{ heading: "Hakkımızda", href: "/hakkimizda" },
 ];
 

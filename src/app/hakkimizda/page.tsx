@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/footer/footer";
+import { PearlButton } from "@/components/ui/pearl-button";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -263,28 +264,9 @@ export default function Hakkimizda() {
             Mekanınızı, hayalinizi ve beklentilerinizi birlikte konuşalım.
             Ücretsiz keşif ve tasarım danışmanlığı sunuyoruz.
           </p>
-          <a href="/iletisim"
-            className="group inline-flex items-center gap-3 px-8 py-4 text-base font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
-            style={{
-              background: "#0a0806",
-              color: "#ffffff",
-              borderRadius: 0,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              fontSize: "0.82rem",
-              border: "1px solid rgba(255,255,255,0.15)",
-              boxShadow: "0 0 0 0 rgba(255,255,255,0)",
-              fontFamily: "var(--font-general)",
-              textDecoration: "none",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 40px 4px rgba(255,255,255,0.12)")}
-            onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 0 0 0 rgba(255,255,255,0)")}
-          >
-            Randevu Al
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
-            </svg>
-          </a>
+          <div className="mb-10">
+            <PearlButton href="/iletisim">Randevu Al</PearlButton>
+          </div>
         </div>
 
         {/* ── ANA KART ────────────────────────────────── */}

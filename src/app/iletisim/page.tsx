@@ -12,6 +12,8 @@ import {
 import Link from 'next/link';
 
 export default function IletisimPage() {
+	const [activeTab, setActiveTab] = useState<'iletisim' | 'lokasyon'>('iletisim');
+
 	return (
 		<main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2" style={{
 			colorScheme: 'light',
@@ -89,27 +91,90 @@ export default function IletisimPage() {
 						Bilgileriniz yalnızca sizinle iletişim kurmak için kullanılır.
 					</p>
 
-					<div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
-						<p className="px-4 pt-3 pb-2 text-xs font-medium text-muted-foreground uppercase tracking-widest">
-							Hızlı İletişim
-						</p>
-						{[
-							{ num: '+90 535 786 52 25', name: 'Suat Babur' },
-							{ num: '+90 533 717 02 39', name: 'Kamuran Babur' },
-							{ num: '+90 542 467 74 94', name: 'Özer Babur' },
-						].map(({ num, name }, i, arr) => (
-							<a
-								key={num}
-								href={`tel:${num.replace(/\s/g, '')}`}
-								className={`flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors${i < arr.length - 1 ? ' border-b border-gray-100' : ''}`}
-							>
-								<div>
-									<p className="text-sm font-medium text-foreground">{name}</p>
-									<p className="text-xs text-muted-foreground mt-0.5">{num}</p>
-								</div>
-								<PhoneIcon className="size-3.5 text-muted-foreground shrink-0" />
-							</a>
-						))}
+					{/* Tab switcher */}
+					<div className="mt-6">
+						<div style={{
+							display: 'flex',
+							position: 'relative',
+							background: '#f3f4f6',
+							borderRadius: '0.75rem',
+							padding: '4px',
+							gap: 0,
+						}}>
+							{/* Glider */}
+							<div style={{
+								position: 'absolute',
+								top: 4, bottom: 4,
+								left: 4,
+								width: 'calc(50% - 4px)',
+								background: '#ffffff',
+								borderRadius: '0.6rem',
+								boxShadow: '0 1px 4px rgba(0,0,0,0.10)',
+								transition: 'transform 0.4s cubic-bezier(0.37, 1.95, 0.66, 0.56)',
+								transform: activeTab === 'lokasyon' ? 'translateX(100%)' : 'translateX(0%)',
+							}} />
+							{(['iletisim', 'lokasyon'] as const).map((tab) => (
+								<button
+									key={tab}
+									onClick={() => setActiveTab(tab)}
+									style={{
+										flex: 1,
+										padding: '0.55rem 0',
+										fontSize: '0.8rem',
+										fontWeight: 600,
+										letterSpacing: '0.02em',
+										background: 'transparent',
+										border: 'none',
+										borderRadius: '0.6rem',
+										cursor: 'pointer',
+										position: 'relative',
+										zIndex: 2,
+										color: activeTab === tab ? '#0a0806' : '#9ca3af',
+										transition: 'color 0.3s ease',
+									}}
+								>
+									{tab === 'iletisim' ? 'İletişim' : 'Lokasyon'}
+								</button>
+							))}
+						</div>
+
+						{/* İletişim içeriği */}
+						{activeTab === 'iletisim' && (
+							<div className="mt-3 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
+								{[
+									{ num: '+90 535 786 52 25', name: 'Suat Babur' },
+									{ num: '+90 533 717 02 39', name: 'Kamuran Babur' },
+									{ num: '+90 542 467 74 94', name: 'Özer Babur' },
+								].map(({ num, name }, i, arr) => (
+									<a
+										key={num}
+										href={`tel:${num.replace(/\s/g, '')}`}
+										className={`flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors${i < arr.length - 1 ? ' border-b border-gray-100' : ''}`}
+									>
+										<div>
+											<p className="text-sm font-medium text-foreground">{name}</p>
+											<p className="text-xs text-muted-foreground mt-0.5">{num}</p>
+										</div>
+										<PhoneIcon className="size-3.5 text-muted-foreground shrink-0" />
+									</a>
+								))}
+							</div>
+						)}
+
+						{/* Lokasyon içeriği */}
+						{activeTab === 'lokasyon' && (
+							<div className="mt-3 rounded-xl overflow-hidden border border-gray-100" style={{ height: 180 }}>
+								<iframe
+									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5!2d29.4185469!3d40.7878458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cadfa135a29edb%3A0x229e2037e5c7fb89!2sBabur%20Mobilya%20%26%20Dekorasyon!5e0!3m2!1str!2str!4v1"
+									width="100%"
+									height="100%"
+									style={{ border: 0, display: 'block' }}
+									allowFullScreen
+									loading="lazy"
+									referrerPolicy="no-referrer-when-downgrade"
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
