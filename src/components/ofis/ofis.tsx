@@ -78,7 +78,13 @@ export default function Ofis() {
       images[i - 1] = img;
     }
     framesRef.current = images;
-    return () => { images.forEach((img) => { img.onload = null; }); };
+
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => {
+      images.forEach((img) => { img.onload = null; });
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   // Canvas scroll scrubbing
@@ -159,7 +165,7 @@ export default function Ofis() {
 
   return (
     <section ref={sectionRef} style={{ height: scrollHeight }}>
-      <div className="sticky top-0 h-screen overflow-hidden bg-black">
+      <div className="sticky top-0 overflow-hidden bg-black" style={{ height: "100dvh" }}>
 
         {/* Canvas */}
         <motion.div className="absolute inset-0" style={{ x: canvasX, y: canvasY, scale: 1.04 }}>

@@ -38,10 +38,10 @@ const ScrollExpandMedia = ({
   const [scrollProgress, setScrollProgress]         = useState<number>(0);
   const [showContent, setShowContent]               = useState<boolean>(false);
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
-  const [touchStartY, setTouchStartY]               = useState<number>(0);
   const [isMobileState, setIsMobileState]           = useState<boolean>(false);
 
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef    = useRef<HTMLDivElement | null>(null);
+  const touchStartRef = useRef<number>(0);
 
   // Orijinal: mediaType değişince sıfırla
   useEffect(() => {
@@ -76,13 +76,13 @@ const ScrollExpandMedia = ({
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      setTouchStartY(e.touches[0].clientY);
+      touchStartRef.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!touchStartY) return;
+      if (!touchStartRef.current) return;
       const touchY  = e.touches[0].clientY;
-      const deltaY  = touchStartY - touchY;
+      const deltaY  = touchStartRef.current - touchY;
       const sectionTop = top();
 
       if (!mediaFullyExpanded && Math.abs(window.scrollY - sectionTop) > 60 && scrollProgress <= 0) return;
@@ -98,11 +98,11 @@ const ScrollExpandMedia = ({
         setScrollProgress(newProgress);
         if (newProgress >= 1)        { setMediaFullyExpanded(true); setShowContent(true); }
         else if (newProgress < 0.75) { setShowContent(false); }
-        setTouchStartY(touchY);
+        touchStartRef.current = touchY;
       }
     };
 
-    const handleTouchEnd = () => setTouchStartY(0);
+    const handleTouchEnd = () => { touchStartRef.current = 0; };
 
     // Orijinal handleScroll — sadece section'ın ALTINA kaçmayı engelle
     const handleScroll = () => {
@@ -127,7 +127,7 @@ const ScrollExpandMedia = ({
       window.removeEventListener('touchmove',  handleTouchMove  as unknown as EventListener);
       window.removeEventListener('touchend',   handleTouchEnd   as EventListener);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
+  }, [scrollProgress, mediaFullyExpanded]);
 
   useEffect(() => {
     const check = () => setIsMobileState(window.innerWidth < 768);

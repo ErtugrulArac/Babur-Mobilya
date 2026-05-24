@@ -47,18 +47,18 @@ const STYLES = `
   }
 
   .text-card-cream {
-    background: linear-gradient(180deg, #f5f0ea 0%, #c9a87a 100%);
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.75) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     transform: translateZ(0);
     filter:
-      drop-shadow(0px 10px 22px rgba(0,0,0,0.7))
-      drop-shadow(0px 3px 6px rgba(0,0,0,0.5));
+      drop-shadow(0px 0px 24px rgba(255,255,255,0.55))
+      drop-shadow(0px 3px 6px rgba(0,0,0,0.3));
   }
 
   .premium-card {
-    background: linear-gradient(145deg, #1a1410 0%, #0d0b08 100%);
+    background: #000000;
     box-shadow:
       0 40px 100px -20px rgba(0,0,0,0.9),
       0 20px 40px -20px rgba(0,0,0,0.8),
@@ -91,7 +91,7 @@ const STYLES = `
   }
 
   .btn-cream {
-    background: linear-gradient(180deg, #f5f0ea 0%, #e8e0d5 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #e8e0d5 100%);
     color: #1a1712;
     box-shadow:
       0 0 0 1px rgba(26,23,18,0.08),
@@ -209,7 +209,7 @@ export default function Hakkimizda() {
   }, []);
 
   return (
-    <div data-light-nav style={{ background: "#f5f0ea" }}>
+    <div data-light-nav style={{ background: "#ffffff", overflowX: "hidden" }}>
       {/* Navbar ayrı stacking context'te — GSAP pin'i tarafından bloklanmaz */}
       <div style={{ position: "relative", zIndex: 9999 }}>
         <Navbar />
@@ -218,7 +218,7 @@ export default function Hakkimizda() {
       <div
         ref={containerRef}
         className="relative w-screen h-screen overflow-hidden flex items-center justify-center"
-        style={{ perspective: "1500px", background: "#f5f0ea", color: "#1a1712", fontFamily: "var(--font-poppins)" }}
+        style={{ perspective: "1500px", background: "#ffffff", color: "#1a1712", fontFamily: "var(--font-poppins)" }}
       >
         <style dangerouslySetInnerHTML={{ __html: STYLES }} />
         <div className="film-grain" aria-hidden />
@@ -238,8 +238,8 @@ export default function Hakkimizda() {
           <div className="max-w-xl mx-auto flex flex-col gap-5 mt-2" style={{ fontFamily: "var(--font-poppins)" }}>
             <p className="font-light leading-[1.85]"
               style={{ color: "rgba(26,23,18,0.58)", fontSize: "clamp(0.82rem,1.1vw,0.96rem)" }}>
-              Babur Mobilya, 1970 yılında Gebze'de — o zamanlar henüz sanayi kokusundan arınmamış,
-              ama hayale alan tanıyan küçük bir Anadolu kasabasında — bir ustanın atölyesinde doğdu.
+              Babur Mobilya, 1970 yılında Gebze'de, o zamanlar henüz sanayi kokusundan arınmamış
+              ama hayale alan tanıyan küçük bir Anadolu kasabasında, bir ustanın atölyesinde doğdu.
               Ne büyük bir sermaye vardı başlangıçta ne de geniş bir depo; yalnızca ağacın lifini
               tanıyan eller, formun ruhunu hisseden bir göz ve "bu işi farklı yapmalıyız" diyen
               inatçı bir ses.
@@ -256,8 +256,8 @@ export default function Hakkimizda() {
 
         {/* ── CTA (SON SAHNE) ─────────────────────────── */}
         <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-6 pointer-events-auto">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold mb-6 tracking-tight text-silver-warm"
-            style={{ fontFamily: "var(--font-general)" }}>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold mb-12 tracking-tight text-silver-warm"
+            style={{ fontFamily: "var(--font-general)", lineHeight: 1.2, paddingBottom: "0.15em" }}>
             Bir çaya ne dersiniz?
           </h2>
           <p className="text-base md:text-xl mb-10 max-w-xl mx-auto font-light leading-relaxed"
@@ -266,11 +266,25 @@ export default function Hakkimizda() {
             Ücretsiz keşif ve tasarım danışmanlığı sunuyoruz.
           </p>
           <a href="/iletisim"
-            className="btn-cream inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-semibold"
-            style={{ fontFamily: "var(--font-general)" }}>
+            className="group inline-flex items-center gap-3 px-8 py-4 text-base font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+            style={{
+              background: "#0a0806",
+              color: "#ffffff",
+              borderRadius: 0,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              fontSize: "0.82rem",
+              border: "1px solid rgba(255,255,255,0.15)",
+              boxShadow: "0 0 0 0 rgba(255,255,255,0)",
+              fontFamily: "var(--font-general)",
+              textDecoration: "none",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 40px 4px rgba(255,255,255,0.12)")}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 0 0 0 rgba(255,255,255,0)")}
+          >
             Randevu Al
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-              <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+              <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
             </svg>
           </a>
         </div>
@@ -290,7 +304,7 @@ export default function Hakkimizda() {
               {/* SAĞ — Misyon */}
               <div className="card-right-text gsap-reveal order-1 lg:order-3 flex flex-col justify-center text-center lg:text-right z-20 w-full">
                 <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-                  style={{ color: "rgba(201,168,122,0.5)", fontFamily: "var(--font-poppins)" }}>
+                  style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-poppins)" }}>
                   Misyonumuz
                 </p>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight mb-4 text-card-cream"
@@ -298,9 +312,9 @@ export default function Hakkimizda() {
                   Yalnızca Sizin İçin.
                 </h2>
                 <p className="text-sm font-light leading-relaxed"
-                  style={{ color: "rgba(245,240,234,0.45)", fontFamily: "var(--font-poppins)" }}>
+                  style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-poppins)" }}>
                   Standart katalog yoktur. Her proje mekanın ruhu okunarak sıfırdan düşünülür 
-                  dinle, anla, üret. Bu sıra 1970'den bu yana hiç değişmedi.
+                  Dinle, anla, üret. Bu sıra 1970'den bu yana hiç değişmedi.
                 </p>
               </div>
 
@@ -316,7 +330,7 @@ export default function Hakkimizda() {
                       fontFamily: "var(--font-general)",
                       fontWeight: 700,
                       letterSpacing: "-0.04em",
-                      WebkitTextStroke: "1px rgba(201,168,122,0.55)",
+                      WebkitTextStroke: "1px rgba(255,255,255,0.5)",
                       color: "transparent",
                       lineHeight: 0.85,
                     }}>
@@ -324,13 +338,13 @@ export default function Hakkimizda() {
                   </div>
 
                   {/* Yatay kural */}
-                  <div className="w-full my-5" style={{ height: 1, background: "linear-gradient(to right, transparent, rgba(201,168,122,0.4), transparent)" }} />
+                  <div className="w-full my-5" style={{ height: 1, background: "linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent)" }} />
 
                   {/* Ek bilgi satırı */}
                   <div className="flex items-center justify-center gap-6">
                     {["K U R U L U Ş", "·", "K O C A E L İ"].map((w, i) => (
                       <span key={i} className="text-[9px] md:text-[10px]"
-                        style={{ color: i === 1 ? "rgba(201,168,122,0.4)" : "rgba(245,240,234,0.35)", letterSpacing: "0.1em", fontFamily: "var(--font-poppins)", fontWeight: 500 }}>
+                        style={{ color: i === 1 ? "rgba(201,168,122,0.4)" : "rgba(255,255,255,0.45)", letterSpacing: "0.1em", fontFamily: "var(--font-poppins)", fontWeight: 500 }}>
                         {w}
                       </span>
                     ))}
@@ -342,7 +356,7 @@ export default function Hakkimizda() {
               {/* SOL — Vizyon */}
               <div className="card-left-text gsap-reveal order-3 lg:order-1 flex flex-col justify-center text-center lg:text-left z-20 w-full px-4 lg:px-0">
                 <p className="text-[10px] tracking-[0.5em] uppercase mb-3"
-                  style={{ color: "rgba(201,168,122,0.5)", fontFamily: "var(--font-poppins)" }}>
+                  style={{ color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-poppins)" }}>
                   Vizyonumuz
                 </p>
                 <h3 className="text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight mb-4 text-card-cream"
@@ -350,7 +364,7 @@ export default function Hakkimizda() {
                   Kalıcı Güzellik.
                 </h3>
                 <p className="text-sm font-light leading-relaxed"
-                  style={{ color: "rgba(245,240,234,0.45)", fontFamily: "var(--font-poppins)" }}>
+                  style={{ color: "rgba(255,255,255,0.55)", fontFamily: "var(--font-poppins)" }}>
                   Türk el işçiliğini çağdaş tasarımla buluşturmak. Nesilden nesile geçen,
                   zamanın testinden çıkan mobilyalar üretmek bu bizim pusulamız.
                 </p>
