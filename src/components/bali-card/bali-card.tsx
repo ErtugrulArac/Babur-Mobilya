@@ -101,7 +101,7 @@ export const Component = ({ title, subtitle, imageSrc, description, onClick, isS
                     <motion.div
                         className="relative z-10 p-2"
                         whileHover={{ scale: 1.03 }}
-                        transition={{ type: "easeInOut" }}
+                        transition={{ ease: "easeInOut", duration: 0.3 }}
                     >
                         <Image
                             src={imageSrc}
