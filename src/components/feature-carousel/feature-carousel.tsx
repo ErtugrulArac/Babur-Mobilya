@@ -1,5 +1,7 @@
 "use client"
 
+import { DottedSurface } from "@/components/ui/dotted-surface"
+import { PearlButton } from "@/components/ui/pearl-button"
 import {
   forwardRef,
   useCallback,
@@ -65,28 +67,28 @@ const steps = [
     name: "01 — Keşif",
     title: "Ölçüm & Keşif",
     description:
-      "Mekanınızı yerinde ziyaret ediyor, ihtiyaçlarınızı ve beklentilerinizi dinliyoruz. Her büyük proje, doğru bir dinleme eylemiyle başlar.",
+      "Mekanınızı yerinde ziyaret ediyor, ışık koşullarını, kullanım alışkanlıklarınızı ve hayallerinizi dinliyoruz. Milimetre hassasiyetinde alınan ölçümler ve kapsamlı bir brifingyle her projeye sağlam bir temel atıyoruz. Doğru başlangıç, mükemmel sonucun yarısıdır.",
   },
   {
     id: "2",
     name: "02 — Tasarım",
     title: "Tasarım & Proje",
     description:
-      "Mimari çizimler ve görsellerle hayalinizdeki mobilyayı somutlaştırıyoruz. Onaylamadan üretim başlamaz; her detay sizinle birlikte şekillenir.",
+      "Brifingden yola çıkarak 2D teknik çizimler ve fotogerçekçi 3D render görseller hazırlıyoruz. Malzeme, renk ve iç düzenleme seçimlerini sizinle birlikte yapıyor; siz memnun kalana kadar revize ediyoruz. Onay imzanız alınmadan üretime tek adım atılmaz.",
   },
   {
     id: "3",
     name: "03 — Üretim",
     title: "Üretim",
     description:
-      "Seçkin malzemeler ve 55 yıllık ustalıkla, her detay özenle hayata geçirilir. Seri üretim değil, saf el işçiliği.",
+      "Tüm üretim kendi atölyemizde, hiçbir iş dışarıya taşeron verilmeden gerçekleşir. Premium MDF, masif ahşap ve lake kapak seçenekleri ustalarımızın elinde şekillenir. Her aşamada kalite kontrol yapılır; ortalama 3-6 haftada tamamlanan süreç boyunca sizi bilgilendiririz.",
   },
   {
     id: "4",
     name: "04 — Teslim",
     title: "Montaj & Teslim",
     description:
-      "Profesyonel montaj ekibimiz projeyi yerinde tamamlar. Teslimden itibaren 2 yıl tam garanti ve ücretsiz servis desteği.",
+      "Mobilyalarınız korumalı ambalajla mekanınıza taşınır, uzman ekibimiz tarafından kurulur ve kontrol turu sizinle birlikte yapılır. Teslim gününde imzalanan garanti belgesiyle 2 yıl tam garanti ve ücretsiz servis desteği başlar. Herhangi bir sorun bildirdiğinizde aynı gün dönüş yapılır.",
   },
 ] as const
 
@@ -188,7 +190,8 @@ function FeatureCard({ children, step }: { children: React.ReactNode; step: numb
       style={{ "--x": useMotionTemplate`${mouseX}px`, "--y": useMotionTemplate`${mouseY}px` } as WrapperStyle}
     >
       <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-white">
-        <div className="m-8 md:m-10 min-h-[420px] w-full">
+        <DottedSurface />
+        <div className="p-8 md:p-10 min-h-[420px]" style={{ position: "relative", zIndex: 1 }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -233,27 +236,9 @@ function FeatureCard({ children, step }: { children: React.ReactNode; step: numb
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                <button
-                  onClick={scrollToDetail}
-                  className="mt-2 inline-flex items-center gap-2 transition-all duration-300 group/btn"
-                  style={{
-                    padding: "0.55rem 1.2rem",
-                    background: "#0a0806",
-                    color: "#ffffff",
-                    fontSize: "0.75rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: "0",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                >
-                  Devamını Gör
-                  <ArrowRight />
-                </button>
+                <div className="mt-2">
+                  <PearlButton onClick={scrollToDetail} small>Devamını Gör</PearlButton>
+                </div>
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -321,28 +306,6 @@ export function FeatureCarousel({ images }: FeatureCarouselProps) {
 
   const renderImages = () => {
     switch (step) {
-      case 0:
-        return (
-          <div className="relative w-full h-full">
-            <AnimatedStepImage alt="Ölçüm" className={cn(imgBase, "w-[50%] left-0 top-[15%]")} src={images.step1[0]} preset="slideInLeft" />
-            <AnimatedStepImage alt="Keşif" className={cn(imgBase, "w-[60%] left-[38%] top-[30%]")} src={images.step1[1]} preset="slideInRight" delay={0.1} />
-          </div>
-        )
-      case 1:
-        return (
-          <div className="relative w-full h-full">
-            <AnimatedStepImage alt="Tasarım" className={cn(imgBase, "w-[50%] left-[5%] top-[20%]")} src={images.step2[0]} preset="fadeInScale" />
-            <AnimatedStepImage alt="Proje"   className={cn(imgBase, "w-[40%] left-[55%] top-[40%]")} src={images.step2[1]} preset="fadeInScale" delay={0.1} />
-          </div>
-        )
-      case 2:
-        return (
-          <AnimatedStepImage alt="Üretim" className={cn(imgBase, "w-[88%] left-[5%] top-[20%]")} src={images.step3} preset="fadeInScale" />
-        )
-      case 3:
-        return (
-          <AnimatedStepImage alt="Montaj" className={cn(imgBase, "w-[88%] left-[5%] top-[20%]")} src={images.step4} preset="fadeInScale" />
-        )
       default:
         return null
     }

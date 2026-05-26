@@ -9,6 +9,8 @@ import Footer from "@/components/footer/footer";
 import ShuffleHero from "@/components/shuffle-hero/shuffle-hero";
 import { Component as BaliCard } from "@/components/bali-card/bali-card";
 import { ImageComparison } from "@/components/image-comparison/image-comparison";
+import { DotPattern } from "@/components/ui/dot-pattern";
+import { CallToAction } from "@/components/ui/call-to-action";
 
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
@@ -72,6 +74,7 @@ export default function UrunlerPage() {
 
   const handleCardClick = (i: number) => {
     setSelectedCard(i);
+    setActiveCarouselCard(i);
     setTimeout(() => {
       comparisonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
@@ -81,8 +84,9 @@ export default function UrunlerPage() {
     const container = mobileScrollRef.current;
     if (!container) return;
     const cardWidth = container.clientWidth * 0.76 + 16;
-    const index = Math.round(container.scrollLeft / cardWidth);
-    setActiveCarouselCard(Math.min(Math.max(index, 0), CARDS.length - 1));
+    const index = Math.min(Math.max(Math.round(container.scrollLeft / cardWidth), 0), CARDS.length - 1);
+    setActiveCarouselCard(index);
+    setSelectedCard(index);
   };
 
   return (
@@ -162,9 +166,12 @@ export default function UrunlerPage() {
             <h2 style={{ fontSize: "clamp(2.5rem,5vw,4.5rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "#0a0806", lineHeight: 0.95, margin: "0 0 1.25rem 0" }}>
               {CARDS[selectedCard].detailTitle}
             </h2>
-            <p style={{ fontSize: "1.125rem", fontWeight: 500, color: "#0a0806", lineHeight: 1.6, maxWidth: 580, margin: 0 }}>
-              {CARDS[selectedCard].detailBody}
-            </p>
+            <div style={{ position: "relative", maxWidth: 580, padding: "2rem", overflow: "hidden", border: "1px solid rgba(10,8,6,0.1)" }}>
+              <DotPattern />
+              <p style={{ position: "relative", fontSize: "1.125rem", fontWeight: 500, color: "#0a0806", lineHeight: 1.6, margin: 0, zIndex: 1 }}>
+                {CARDS[selectedCard].detailBody}
+              </p>
+            </div>
           </motion.div>
           <ImageComparison
             beforeImage={CARDS[selectedCard].beforeImage}
@@ -303,92 +310,8 @@ export default function UrunlerPage() {
         </div>
       </section>
 
-      {/* ── Neden Babur? ──────────────────────────── */}
-      <section style={{ position: "relative", overflow: "hidden", padding: "clamp(5rem,10vw,9rem) 0" }}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }}
-        >
-          <source src="/baburvideo.mp4" type="video/mp4" />
-        </video>
-        <div style={{ position: "absolute", inset: 0, background: "rgba(8,6,4,0.72)", zIndex: 1 }} />
-
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,4rem)" }}>
-          <motion.h2
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{ fontSize: "clamp(2.4rem,5vw,4.5rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "#ffffff", lineHeight: 0.95, margin: "0 0 clamp(3rem,5vw,5rem) 0" }}
-          >
-            Neden Babur Mobilya?
-          </motion.h2>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: "1rem", marginBottom: "clamp(3rem,5vw,4rem)" }}>
-            {[
-              { stat: "55+",  label: "Yıl Deneyim"        },
-              { stat: "500+", label: "Tamamlanan Proje"    },
-              { stat: "100%", label: "Yerli Üretim"        },
-              { stat: "1970", label: "'dan Beri"           },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  padding: "clamp(1.5rem,3vw,2.5rem) clamp(1rem,2vw,1.5rem)",
-                  textAlign: "center",
-                }}
-              >
-                <div style={{ fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.04em", lineHeight: 1 }}>
-                  {item.stat}
-                </div>
-                <div style={{ fontSize: "0.78rem", fontWeight: 500, color: "rgba(255,255,255,0.55)", letterSpacing: "0.06em", textTransform: "uppercase", marginTop: "0.5rem" }}>
-                  {item.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Feature cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: "1rem" }}>
-            {[
-              { title: "El İşçiliği",    body: "Her parça ustalarımızın elinden çıkar, endüstriyel seri üretim yok." },
-              { title: "Özel Ölçü",     body: "Standart ürün bulunmaz. Her proje mekanınıza özgün tasarlanır." },
-              { title: "2 Yıl Garanti", body: "Montajdan itibaren 2 yıl tam garanti ve ücretsiz servis desteği." },
-            ].map((f, i) => (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  padding: "clamp(1.5rem,3vw,2.5rem)",
-                }}
-              >
-                <div style={{ fontSize: "1rem", fontWeight: 600, color: "#ffffff", letterSpacing: "-0.02em", marginBottom: "0.75rem" }}>
-                  {f.title}
-                </div>
-                <div style={{ fontSize: "0.875rem", fontWeight: 400, color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
-                  {f.body}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section style={{ padding: "clamp(5rem,10vw,9rem) 0", background: "#ffffff" }}>
+        <CallToAction />
       </section>
 
       <Footer variant="dark" />

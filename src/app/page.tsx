@@ -8,6 +8,7 @@ import Text2 from "@/components/textkısmı/text2";
 import SSS from "@/components/sss/sss";
 import Yorumlar from "@/components/müşteriyorumları/yorumlar";
 import Footer from "@/components/footer/footer";
+import { WavePath } from "@/components/ui/wave-path";
 
 function ChapterBreak({ number, label }: { number: string; label: string }) {
   return (
@@ -29,6 +30,21 @@ export default function Home() {
       <ScrolVideo />
       <StoryScrol />
       <TextSection />
+      <div className="bg-white px-6 md:px-16 lg:px-24 pt-12 pb-24">
+        <div className="flex justify-center">
+          <WavePath className="text-black" />
+        </div>
+        <div className="mt-10 flex flex-col md:flex-row gap-6 md:gap-16 max-w-5xl mx-auto">
+          <span className="text-xs text-neutral-400 tracking-widest uppercase shrink-0 mt-1">Babur Mobilya</span>
+          <div className="relative">
+            <span className="absolute -top-6 -left-4 text-6xl text-neutral-200 font-serif leading-none select-none">"</span>
+            <p className="text-2xl md:text-4xl text-neutral-800 leading-snug font-light px-4">
+              Piyasadaki birbirinin kopyası, ruhsuz ve ne üretildiği bile belli olmayan standart mobilyalardan sıkıldıysanız; malzemesiyle, dokusuyla ve işçiliğiyle gerçekten hissedilen bir yaşam alanı arıyorsanız, doğru yerdesiniz.
+            </p>
+            <span className="absolute -bottom-8 -right-2 text-6xl text-neutral-200 font-serif leading-none select-none">"</span>
+          </div>
+        </div>
+      </div>
       <Text2 />
 
       <ChapterBreak number="02" label="Çalışma Alanları" />

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { StarButton } from "@/components/ui/star-button";
+import { PearlButton } from "@/components/ui/pearl-button";
 
 export const ShuffleHero = () => {
   return (
@@ -18,9 +18,7 @@ export const ShuffleHero = () => {
         <p className="text-lg md:text-xl my-4 md:my-6" style={{ color: "#0a0806" }}>
           Mutfaktan çalışma odasına, her mekan için özel tasarım. 1970'dan bu yana aynı özen, her projede.
         </p>
-        <StarButton className="h-12 px-6 text-base">
-          Bizimle Çalışın
-        </StarButton>
+        <PearlButton href="/iletisim">Bizimle Çalışın</PearlButton>
       </div>
       <div className="hidden md:block">
         <ShuffleGrid />

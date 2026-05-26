@@ -10,18 +10,21 @@ const ITEMS = [
     word: 'Tasarım',
     desc: 'Ev ve ofis mobilyası tasarımında ölçü, malzeme ve estetik bir araya gelir. Mekanınıza özel konsept geliştirip 3D görselleştirme ile onayınızı alır, sonra üretime geçeriz.',
     bg: '/deneme1.webp',
+    href: '/surec#adim-2',
   },
   {
     num: '2',
     word: 'Üretim',
     desc: 'Masif ahşap, İtalyan deri ve Avrupa menşeli yarı mamuller kullanılarak el işçiliğiyle üretilir. Endüstriyel seri üretimin yerini alamayacağı bir atölye kalitesi sunarız.',
     bg: '/deneme2.webp',
+    href: '/surec#adim-3',
   },
   {
     num: '3',
     word: 'Kurulum',
     desc: 'Mobilyalarınız fabrikadan çıktığı günkü kaliteyle evinize taşınır, profesyonel ekibimiz tarafından kurulur. 5 yıl malzeme ve işçilik garantisi ile teslim edilir.',
     bg: '/deneme3.webp',
+    href: '/surec#adim-4',
   },
 ];
 
@@ -137,6 +140,7 @@ function DesktopRow({
   onLeave: () => void;
 }) {
   return (
+    <a href={item.href} style={{ textDecoration: 'none', display: 'block' }}>
     <motion.div
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
@@ -144,7 +148,7 @@ function DesktopRow({
         backgroundColor: isHovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0)',
       }}
       transition={{ duration: 0.3 }}
-      className="relative flex items-center border-b border-white/8 cursor-default overflow-hidden"
+      className="relative flex items-center border-b border-white/8 cursor-pointer overflow-hidden"
       style={{ minHeight: 280 }}
     >
       {/* Sol — numara + açıklama */}
@@ -203,11 +207,13 @@ function DesktopRow({
         transition={{ duration: 0.4 }}
       />
     </motion.div>
+    </a>
   );
 }
 
 function MobileCard({ item, index }: { item: typeof ITEMS[0]; index: number }) {
   return (
+    <a href={item.href} style={{ textDecoration: 'none', display: 'block' }}>
     <div
       className="relative overflow-hidden border-b border-white/8"
       style={{ minHeight: 340 }}
@@ -244,5 +250,6 @@ function MobileCard({ item, index }: { item: typeof ITEMS[0]; index: number }) {
         </div>
       </div>
     </div>
+    </a>
   );
 }

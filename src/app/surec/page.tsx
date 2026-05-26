@@ -5,12 +5,14 @@ import { useRef } from "react"
 import Navbar from "@/components/navbar/navbar"
 import Footer from "@/components/footer/footer"
 import { FeatureCarousel } from "@/components/feature-carousel/feature-carousel"
+import { FeatureCard } from "@/components/ui/feature-card"
+import { Ruler, PenLine, Hammer, PackageCheck } from "lucide-react"
 
 const IMAGES = {
-  step1: ["/hizmetlermain/hizmet1.webp", "/hizmetlermain/hizmet3.webp"] as [string, string],
-  step2: ["/hizmetlermain/hizmet5.webp", "/hizmetlermain/hizmet7.webp"] as [string, string],
-  step3: "/hizmetlermain/hizmet9.webp",
-  step4: "/hizmetlermain/hizmet13.webp",
+  step1: ["/surec-sayfasi/olcum-kesif.webp", "/surec-sayfasi/olcum-kesif.webp"] as [string, string],
+  step2: ["/surec-sayfasi/tasarim-proje.webp", "/surec-sayfasi/tasarim-proje.webp"] as [string, string],
+  step3: "/surec-sayfasi/uretim.webp",
+  step4: "/surec-sayfasi/montaj-teslim.webp",
 }
 
 const DETAILS = [
@@ -30,7 +32,7 @@ const DETAILS = [
       "Bütçe ve zaman planı bu aşamada netleşir",
       "Keşif sonrası yazılı brifing teslim edilir",
     ],
-    img: "/hizmetlermain/hizmet2.webp",
+    img: "/surec-sayfasi/olcum-kesif.webp",
     flip: false,
   },
   {
@@ -49,7 +51,7 @@ const DETAILS = [
       "Sınırsız revizyon hakkı",
       "Onay imzası alınmadan üretim başlamaz",
     ],
-    img: "/hizmetlermain/hizmet6.webp",
+    img: "/surec-sayfasi/tasarim-proje.webp",
     flip: true,
   },
   {
@@ -68,7 +70,7 @@ const DETAILS = [
       "Ortalama 3-6 haftalık üretim süresi",
       "Süreç boyunca haftalık ilerleme bildirimi",
     ],
-    img: "/hizmetlermain/hizmet10.webp",
+    img: "/surec-sayfasi/uretim.webp",
     flip: false,
   },
   {
@@ -87,7 +89,7 @@ const DETAILS = [
       "2 yıl tam garanti ve ücretsiz servis",
       "Sorun bildirimi için aynı gün dönüş",
     ],
-    img: "/hizmetlermain/hizmet14.webp",
+    img: "/surec-sayfasi/montaj-teslim.webp",
     flip: true,
   },
 ]
@@ -335,6 +337,52 @@ export default function SurecPage() {
         <DetailSection key={detail.id} detail={detail} />
       ))}
 
+      {/* ── Feature Cards ─────────────────────────── */}
+      <div style={{ height: "clamp(4rem, 8vw, 7rem)" }} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 divide-x divide-y border" style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
+        <a href="#adim-1" style={{ textDecoration: "none", color: "inherit" }}>
+          <FeatureCard
+            feature={{
+              title: "Yerinde Ölçüm",
+              icon: Ruler,
+              description: "Mekanınızı ekibimiz yerinde ziyaret ederek milimetrik ölçümler alır; hiçbir detay atlanmaz.",
+            }}
+            className="cursor-pointer h-full"
+          />
+        </a>
+        <a href="#adim-2" style={{ textDecoration: "none", color: "inherit" }}>
+          <FeatureCard
+            feature={{
+              title: "3D Tasarım & Görselleştirme",
+              icon: PenLine,
+              description: "Onaylamadan önce mobilyanızı 3D render ile görün; malzeme ve renk seçimlerini gerçekçi ortamda değerlendirin.",
+            }}
+            className="cursor-pointer h-full"
+          />
+        </a>
+        <a href="#adim-3" style={{ textDecoration: "none", color: "inherit" }}>
+          <FeatureCard
+            feature={{
+              title: "Atölye Üretimi",
+              icon: Hammer,
+              description: "Her parça kendi atölyemizde, uzman ustalar tarafından üretilir. Hiçbir iş dışarıya taşeron olarak verilmez.",
+            }}
+            className="cursor-pointer h-full"
+          />
+        </a>
+        <a href="#adim-4" style={{ textDecoration: "none", color: "inherit" }}>
+          <FeatureCard
+            feature={{
+              title: "Teslim & 2 Yıl Garanti",
+              icon: PackageCheck,
+              description: "Profesyonel montaj ekibimiz kurulumu tamamlar; teslim gününden itibaren 2 yıl tam garanti başlar.",
+            }}
+            className="cursor-pointer h-full"
+          />
+        </a>
+      </div>
+
+      <div style={{ height: "clamp(6rem, 12vw, 10rem)" }} />
       <Footer variant="dark" />
     </div>
   )

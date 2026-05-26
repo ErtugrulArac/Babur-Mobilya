@@ -4,9 +4,10 @@ interface PearlButtonProps {
   children?: React.ReactNode
   href?: string
   onClick?: () => void
+  small?: boolean
 }
 
-export function PearlButton({ children = "Pearl Button", href, onClick }: PearlButtonProps) {
+export function PearlButton({ children = "Pearl Button", href, onClick, small }: PearlButtonProps) {
   const inner = (
     <button className="pearl-btn" onClick={onClick}>
       <div className="pearl-wrap">
@@ -41,10 +42,10 @@ export function PearlButton({ children = "Pearl Button", href, onClick }: PearlB
             0 1rem 1rem -0.6rem rgba(0,0,0,0.8);
         }
         .pearl-wrap {
-          font-size: clamp(14px, 3.5vw, 22px);
+          font-size: ${small ? "clamp(10px, 1.8vw, 12px)" : "clamp(12px, 2.5vw, 16px)"};
           font-weight: 500;
           color: rgba(255,255,255,0.7);
-          padding: clamp(16px, 3.5vw, 28px) clamp(24px, 5vw, 44px);
+          padding: ${small ? "clamp(10px, 1.8vw, 12px) clamp(14px, 2.5vw, 20px)" : "clamp(12px, 2.5vw, 18px) clamp(20px, 4vw, 32px)"};
           border-radius: inherit;
           position: relative;
           overflow: hidden;

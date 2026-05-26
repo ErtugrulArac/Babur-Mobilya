@@ -2,23 +2,26 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { PearlButton } from '@/components/ui/pearl-button';
 
 const STEPS = [
   {
     num: '01',
     title: 'Mekanınızı Dinliyoruz.',
     desc: 'Her alan bir ihtiyacı barındırır. Sizinle birebir görüşerek yaşam biçiminizi, zevklerinizi ve mekanın ruhunu anlarız — form doldurmadan, katalog göndermeden.',
+    href: '/surec#adim-1',
   },
   {
     num: '02',
     title: 'Tasarım Oluşturuyoruz.',
     desc: 'Duyduklarımızı somuta dönüştürürüz. Malzeme seçiminden renk paletine, ölçüden dokuya kadar size özgü bir tasarım dili kurulur; 3D görsellerle gözünüzde canlandırılır.',
+    href: '/surec#adim-2',
   },
   {
     num: '03',
     title: 'Elinize Teslim Ediyoruz.',
     desc: 'Onaylı tasarım atölyemizde hayat bulur. Her parça kendi ustası tarafından işlenir, kalite kontrolünden geçer ve evinize kurulana kadar süreç bizim sorumluluğumuzdadır.',
+    href: '/surec#adim-4',
   },
 ];
 
@@ -85,52 +88,6 @@ function DrawLine({ delay = 0, inView }: { delay?: number; inView: boolean }) {
   );
 }
 
-// ── Manyetik buton ───────────────────────────────────────────────────────────
-function MagneticButton() {
-  const bx = useMotionValue(0);
-  const by = useMotionValue(0);
-  const sx = useSpring(bx, { stiffness: 200, damping: 18 });
-  const sy = useSpring(by, { stiffness: 200, damping: 18 });
-  const ref = useRef<HTMLButtonElement>(null);
-  const [hovered, setHovered] = useState(false);
-
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    bx.set((e.clientX - r.left - r.width  / 2) * 0.35);
-    by.set((e.clientY - r.top  - r.height / 2) * 0.35);
-  }, [bx, by]);
-
-  const onMouseLeave = useCallback(() => {
-    bx.set(0); by.set(0); setHovered(false);
-  }, [bx, by]);
-
-  return (
-    <motion.button
-      ref={ref}
-      onMouseMove={onMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={onMouseLeave}
-      whileTap={{ scale: 0.96 }}
-      style={{
-        x: sx, y: sy,
-        background: '#111',
-        fontFamily: "var(--font-poppins)",
-        fontSize: '0.68rem',
-        fontWeight: 500,
-        letterSpacing: '0.22em',
-        textTransform: 'uppercase',
-        color: '#fff',
-      }}
-      className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full cursor-pointer w-fit"
-    >
-      <span>Projemi Başlat</span>
-      <motion.span animate={{ x: hovered ? 5 : 0 }} transition={{ duration: 0.25 }} className="inline-flex">
-        <ArrowRight size={13} strokeWidth={2} />
-      </motion.span>
-    </motion.button>
-  );
-}
 
 // ── Ambient cursor glow ──────────────────────────────────────────────────────
 function useAmbientGlow() {
@@ -235,7 +192,7 @@ export default function TextSection() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.55 }}
               >
-                <MagneticButton />
+                <PearlButton href="/iletisim">Projemi Başlat</PearlButton>
               </motion.div>
             </div>
           </div>
