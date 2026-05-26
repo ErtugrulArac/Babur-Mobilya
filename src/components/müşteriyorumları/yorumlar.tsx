@@ -6,60 +6,63 @@ import { cn } from '@/lib/utils';
 
 const SQRT_5000 = Math.sqrt(5000);
 
+const AVATAR_ERKEK = "/avatarerkek.webp"
+const AVATAR_KADIN = "/avatarkadin.webp"
+
 const testimonials = [
   {
     tempId: 0,
     testimonial: "Ofisimizin tüm mobilyalarını Babur Mobilya ile yenilettik. Tasarım sürecinden teslimata kadar her aşama son derece profesyoneldi.",
     by: "Mehmet Yılmaz, Kurucu Ortak, Yılmaz Hukuk",
-    imgSrc: "https://i.pravatar.cc/150?img=1"
+    imgSrc: AVATAR_ERKEK,
   },
   {
     tempId: 1,
     testimonial: "Müşterilerim için birçok proje referansı verdim. Her seferinde kalite ve işçilik konusunda hayal kırıklığı yaşatmadılar. Masif ahşap işçiliği gerçekten üst düzey.",
     by: "Elif Kara, İç Mimar",
-    imgSrc: "https://i.pravatar.cc/150?img=5"
+    imgSrc: AVATAR_KADIN,
   },
   {
     tempId: 2,
     testimonial: "Açık ofis alanımız için 40'tan fazla çalışma birimi sipariş ettik. Montaj ekibi son derece düzenli çalıştı, teslim tarihi tam tutturuldu.",
     by: "Serkan Doğan, Genel Müdür, TechPark AŞ",
-    imgSrc: "https://i.pravatar.cc/150?img=3"
+    imgSrc: AVATAR_ERKEK,
   },
   {
     tempId: 3,
     testimonial: "Yatak odamız için özel gardrop ve çekmece ünitesi yaptırdık. Ölçüler mükemmel, malzeme kalitesi beklentinin çok üzerinde.",
     by: "Ayşe Tunç, Ev Sahibi",
-    imgSrc: "https://i.pravatar.cc/150?img=9"
+    imgSrc: AVATAR_KADIN,
   },
   {
     tempId: 4,
     testimonial: "Projenin en kritik anında üretim takvimine sadık kaldılar. Hem estetik hem teknik detaylara gösterdikleri özen beni etkiledi.",
     by: "Burak Şahin, Mimar",
-    imgSrc: "https://i.pravatar.cc/150?img=7"
+    imgSrc: AVATAR_ERKEK,
   },
   {
     tempId: 5,
     testimonial: "Mutfak dolabımızı yaptırdık. Renk seçiminden iç düzenlemeye kadar her konuda destek aldık. Sonuç harika oldu.",
     by: "Selin Arslan, Ev Sahibi",
-    imgSrc: "https://i.pravatar.cc/150?img=10"
+    imgSrc: AVATAR_KADIN,
   },
   {
     tempId: 6,
     testimonial: "Kurumsal kimliğimizi yansıtan bir ofis mobilyası istiyorduk. Babur Mobilya tam olarak bunu başardı. Misafirlerimiz her zaman hayran kalıyor.",
     by: "Can Öztürk, CEO, Öztürk Mimarlık",
-    imgSrc: "https://i.pravatar.cc/150?img=12"
+    imgSrc: AVATAR_ERKEK,
   },
   {
     tempId: 7,
     testimonial: "Tüm evi mobilya açısından yenilettik. Oturma odası, yatak odası ve çalışma köşesi için özel üretim yaptırdık. Her biri beklentinin üzerinde çıktı.",
     by: "Zeynep Koç, Ev Sahibi",
-    imgSrc: "https://i.pravatar.cc/150?img=15"
+    imgSrc: AVATAR_KADIN,
   },
   {
     tempId: 8,
     testimonial: "Resepsiyon alanımız için modern bir kabul masası tasarlandı. Hem işlevsel hem de şık bir sonuç çıktı. Ziyaretçilerimiz ilk gördüklerinde beğenilerini dile getiriyor.",
     by: "Hakan Demir, Ofis Yöneticisi",
-    imgSrc: "https://i.pravatar.cc/150?img=17"
+    imgSrc: AVATAR_ERKEK,
   },
 ];
 

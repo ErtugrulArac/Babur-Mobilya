@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { PearlButton } from '@/components/ui/pearl-button';
 
@@ -50,29 +50,6 @@ function WordReveal({ text, delay = 0, className = '', style = {} }: {
       ))}
     </span>
   );
-}
-
-// ── Sayaç animasyonu ─────────────────────────────────────────────────────────
-function Counter({ target, inView }: { target: number; inView: boolean }) {
-  const [display, setDisplay] = useState(0);
-  const started = useRef(false);
-
-  useEffect(() => {
-    if (!inView || started.current) return;
-    started.current = true;
-    let start = 0;
-    const end = target;
-    const duration = 900;
-    const step = duration / end;
-    const timer = setInterval(() => {
-      start += 1;
-      setDisplay(start);
-      if (start >= end) clearInterval(timer);
-    }, step);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-
-  return <>{String(display).padStart(2, '0')}</>;
 }
 
 // ── Soldan çizilen çizgi ─────────────────────────────────────────────────────
@@ -228,7 +205,6 @@ function StepRow({ step, index, inView }: {
   step: typeof STEPS[0]; index: number; inView: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
-  const numTarget = parseInt(step.num);
 
   return (
     <motion.div
@@ -245,17 +221,6 @@ function StepRow({ step, index, inView }: {
       }}
       className="flex gap-6 py-7 cursor-default"
     >
-      {/* Sayaç */}
-      <motion.span
-        animate={{ color: hovered ? '#111' : '#ccc', scale: hovered ? 1.12 : 1 }}
-        transition={{ duration: 0.3 }}
-        className="shrink-0 mt-0.5 tabular-nums"
-        style={{ fontFamily: "var(--font-poppins)", fontSize: '0.68rem',
-          fontWeight: 400, letterSpacing: '0.06em', minWidth: 24, display: 'inline-block' }}
-      >
-        <Counter target={numTarget} inView={inView} />
-      </motion.span>
-
       {/* Metin */}
       <div className="flex flex-col gap-2 flex-1">
         <p style={{ fontFamily: "var(--font-poppins)", fontSize: 'clamp(0.95rem,1.35vw,1.12rem)',

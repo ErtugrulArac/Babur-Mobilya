@@ -41,12 +41,12 @@ const DETAILS = [
     title: "Tasarım & Proje",
     lead: "Hayalinizdeki mobilyayı görmeden onaylamazsınız.",
     body: [
-      "Keşif brifinginden yola çıkarak tasarım ekibimiz 2D teknik çizimler ve 3D render görseller hazırlar. Sunumda malzeme seçenekleri, kapak renkleri, iç aksesuar düzeni ve aydınlatma detayları birlikte incelenir.",
+      "Keşif brifinginden yola çıkarak tasarım ekibimiz tam ölçekli teknik çizimler ve dijital perspektif görseller hazırlar. Sunumda malzeme örnekleri elinizde tutularak kapak renkleri, iç aksesuar düzeni ve aydınlatma detayları birlikte kararlaştırılır.",
       "Her revizyonu dikkate alır, tasarımı siz memnun kalana kadar geliştiririz. Onay imzanız alınmadan üretim aşamasına geçilmez; bu süreçte ek maliyet ve sürpriz yoktur.",
     ],
     points: [
-      "Tam ölçekli 2D teknik çizimler",
-      "Fotogerçekçi 3D render sunumu",
+      "Tam ölçekli teknik çizimler ve kat planı",
+      "Dijital perspektif ve malzeme örnekleriyle sunum",
       "Malzeme ve renk kataloğuyla bire bir seçim",
       "Sınırsız revizyon hakkı",
       "Onay imzası alınmadan üretim başlamaz",
@@ -80,14 +80,14 @@ const DETAILS = [
     lead: "Montaj bittiğinde mekan hazır, iz kalmaz.",
     body: [
       "Uzman montaj ekibimiz mobilyaları fabrikadan direkt mekanınıza getirir; taşıma sırasında her parça korumalı ambalajda tutulur. Montaj süreci tamamlandıktan sonra ekibimiz alanı temizler ve sizinle birlikte kontrol turu yapar.",
-      "Teslim gününde imzalanan garanti belgesiyle 2 yıl tam garanti ve ücretsiz servis desteği başlar. Herhangi bir sorun yaşandığında aynı gün dönüş yapılır.",
+      "Teslim gününde imzalanan belgeyle kapsamlı bir satış sonrası destek süreci başlar. Montaj ekibimiz her sorunuza aynı gün yanıt verir; uzun vadeli bakım ve teknik destek hizmetimiz kesintisiz sürer.",
     ],
     points: [
       "Korumalı ambalajla taşıma ve montaj",
       "Aynı gün temizlik ve düzen",
       "Teslim kontrol turu sizinle yapılır",
-      "2 yıl tam garanti ve ücretsiz servis",
-      "Sorun bildirimi için aynı gün dönüş",
+      "Teslim sonrası kapsamlı bakım ve teknik destek",
+      "Her sorun bildirimi için aynı gün yanıt",
     ],
     img: "/surec-sayfasi/montaj-teslim.webp",
     flip: true,
@@ -112,22 +112,6 @@ function DetailSection({ detail }: { detail: typeof DETAILS[number] }) {
         <div className={`flex flex-col ${detail.flip ? "md:flex-row-reverse" : "md:flex-row"} gap-10 md:gap-16 items-center`}>
           {/* Metin */}
           <div className="w-full md:w-1/2">
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                fontSize: "0.7rem",
-                letterSpacing: "0.28em",
-                color: "rgba(10,8,6,0.35)",
-                textTransform: "uppercase",
-                fontFamily: "monospace",
-                marginBottom: "1rem",
-              }}
-            >
-              Adım {detail.num}
-            </motion.p>
-
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -353,9 +337,9 @@ export default function SurecPage() {
         <a href="#adim-2" style={{ textDecoration: "none", color: "inherit" }}>
           <FeatureCard
             feature={{
-              title: "3D Tasarım & Görselleştirme",
+              title: "Malzeme & Renk Seçimi",
               icon: PenLine,
-              description: "Onaylamadan önce mobilyanızı 3D render ile görün; malzeme ve renk seçimlerini gerçekçi ortamda değerlendirin.",
+              description: "Ahşap türü, kapak rengi ve yüzey dokusunu katalogdan değil, bire bir deneyimleyerek seçin; tasarım size uygun netleşir.",
             }}
             className="cursor-pointer h-full"
           />
@@ -373,9 +357,9 @@ export default function SurecPage() {
         <a href="#adim-4" style={{ textDecoration: "none", color: "inherit" }}>
           <FeatureCard
             feature={{
-              title: "Teslim & 2 Yıl Garanti",
+              title: "Montaj & Kurulum",
               icon: PackageCheck,
-              description: "Profesyonel montaj ekibimiz kurulumu tamamlar; teslim gününden itibaren 2 yıl tam garanti başlar.",
+              description: "Uzman ekibimiz mobilyalarınızı mekanınıza taşır, kurar ve kontrol turuyla teslim eder; alan temiz, iz kalmaz.",
             }}
             className="cursor-pointer h-full"
           />

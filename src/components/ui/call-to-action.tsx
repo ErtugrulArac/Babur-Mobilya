@@ -37,7 +37,7 @@ export function CallToAction() {
       </div>
 
       <div className="flex items-center justify-center gap-2">
-        <Button className="bg-transparent border border-input text-foreground hover:bg-accent" onClick={() => window.location.href = "/hakkimizda"}>Hakkımızda</Button>
+        <Button onClick={() => window.location.href = "/hakkimizda"}>Hakkımızda</Button>
         <Button onClick={() => window.location.href = "/iletisim"}>
           İletişime Geç <ArrowRightIcon className="size-4 ml-1" />
         </Button>

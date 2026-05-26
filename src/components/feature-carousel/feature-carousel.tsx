@@ -74,7 +74,7 @@ const steps = [
     name: "02 — Tasarım",
     title: "Tasarım & Proje",
     description:
-      "Brifingden yola çıkarak 2D teknik çizimler ve fotogerçekçi 3D render görseller hazırlıyoruz. Malzeme, renk ve iç düzenleme seçimlerini sizinle birlikte yapıyor; siz memnun kalana kadar revize ediyoruz. Onay imzanız alınmadan üretime tek adım atılmaz.",
+      "Brifingden yola çıkarak tam ölçekli teknik çizimler ve dijital perspektif görseller hazırlıyoruz. Malzeme örneklerini elinizde tutarak renk, doku ve iç düzenleme seçimlerini birlikte yapıyoruz; siz onaylamadan üretime tek adım atılmaz.",
   },
   {
     id: "3",
@@ -88,7 +88,7 @@ const steps = [
     name: "04 — Teslim",
     title: "Montaj & Teslim",
     description:
-      "Mobilyalarınız korumalı ambalajla mekanınıza taşınır, uzman ekibimiz tarafından kurulur ve kontrol turu sizinle birlikte yapılır. Teslim gününde imzalanan garanti belgesiyle 2 yıl tam garanti ve ücretsiz servis desteği başlar. Herhangi bir sorun bildirdiğinizde aynı gün dönüş yapılır.",
+      "Mobilyalarınız korumalı ambalajla mekanınıza taşınır, uzman ekibimiz tarafından kurulur ve kontrol turu sizinle birlikte yapılır. Teslim belgesi imzalandığı andan itibaren kapsamlı satış sonrası destek sürecimiz başlar. Her sorun bildirimi aynı gün yanıtlanır, bakım hizmetimiz kesintisiz sürer.",
   },
 ] as const
 

@@ -61,8 +61,7 @@ export default function Footer({ variant = "dark" }: { variant?: "dark" | "light
 	const iconBgHov = dk ? "rgba(255,255,255,0.06)" : "rgba(26,23,18,0.07)";
 	const iconHov   = dk ? "rgba(255,255,255,0.8)"  : "rgba(26,23,18,0.85)";
 	const copy      = dk ? "rgba(255,255,255,0.2)"  : "rgba(26,23,18,0.3)";
-	const credit    = dk ? "rgba(255,255,255,0.15)" : "rgba(26,23,18,0.25)";
-	const creditHov = dk ? "rgba(255,255,255,0.5)"  : "rgba(26,23,18,0.55)";
+const creditHov = dk ? "rgba(255,255,255,0.5)"  : "rgba(26,23,18,0.55)";
 	const creditHov2= dk ? "rgba(255,255,255,0.9)"  : "rgba(26,23,18,0.9)";
 
 	return (
@@ -142,7 +141,7 @@ export default function Footer({ variant = "dark" }: { variant?: "dark" | "light
 					<p className="text-xs font-light" style={{ color: copy }}>
 						© {year} Babur Mobilya. Tüm hakları saklıdır.
 					</p>
-					<p className="text-xs font-light" style={{ color: credit }}>
+					<p className="text-xs font-light" style={{ color: "#ffffff" }}>
 						Tasarım & Geliştirme{' '}
 						<a href="https://arlanmedya.com" target="_blank" rel="noopener noreferrer"
 							className="font-semibold transition-colors duration-200"

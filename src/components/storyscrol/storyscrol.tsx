@@ -127,10 +127,6 @@ const FlowSection: React.FC<{ data: SectionData }> = ({ data }) => (
         </div>
       ))}
       <div className="w-px h-8 self-center" style={{ background: data.whiteText ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)' }} />
-      <span className="font-black self-center"
-        style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', opacity: 0.12, letterSpacing: '-0.04em', color: data.whiteText ? 'white' : 'black' }}>
-        {data.index}
-      </span>
     </div>
 
     {/* ── SAĞ PANEL — desktop only ──────────────────────── */}
@@ -203,15 +199,7 @@ const FlowSection: React.FC<{ data: SectionData }> = ({ data }) => (
       {/* İçerik */}
       <div className="relative flex flex-col justify-between h-full p-6 md:p-12">
         {/* Üst */}
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] tracking-[0.55em] uppercase text-white/30">
-            {data.index}
-          </span>
-          <div className="w-6 h-px bg-white/20" />
-          <span className="text-[10px] tracking-[0.4em] uppercase text-white/25">
-            {data.label}
-          </span>
-        </div>
+        <div />
 
         {/* Orta */}
         <div className="flex flex-col gap-4">
