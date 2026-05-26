@@ -63,7 +63,7 @@ const WeaveSpinner = () => (
       <div className="thread t3" />
       <div className="thread t4" />
       <div className="node">
-        <img src="/logo/baburlogo.png" alt="Babur Mobilya" />
+        <img src="/logo/baburlogo.png" alt="Babur Mobilya" suppressHydrationWarning />
       </div>
     </div>
   </>

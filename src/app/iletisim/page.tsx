@@ -29,7 +29,7 @@ export default function IletisimPage() {
 			<div className="bg-white relative hidden h-full flex-col border-r border-gray-100 p-10 lg:flex">
 				<div className="from-background absolute inset-0 z-10 bg-gradient-to-t to-transparent" />
 				<div className="z-10 flex items-center">
-					<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-16 w-auto" />
+					<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-16 w-auto" suppressHydrationWarning />
 				</div>
 				<div className="z-10 mt-auto">
 					<blockquote className="space-y-2">
@@ -73,7 +73,7 @@ export default function IletisimPage() {
 
 				<div className="mx-auto space-y-4 sm:w-sm pt-16 lg:pt-0">
 					<div className="flex items-center lg:hidden">
-						<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-14 w-auto" />
+						<img src="/logo/baburlogo.png" alt="Babur Mobilya" className="h-14 w-auto" suppressHydrationWarning />
 					</div>
 
 					<div className="flex flex-col space-y-1">
@@ -139,42 +139,40 @@ export default function IletisimPage() {
 						</div>
 
 						{/* İletişim içeriği */}
-						{activeTab === 'iletisim' && (
-							<div className="mt-3 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
-								{[
-									{ num: '+90 535 786 52 25', name: 'Suat Babur' },
-									{ num: '+90 533 717 02 39', name: 'Kamuran Babur' },
-									{ num: '+90 542 467 74 94', name: 'Özer Babur' },
-								].map(({ num, name }, i, arr) => (
-									<a
-										key={num}
-										href={`tel:${num.replace(/\s/g, '')}`}
-										className={`flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors${i < arr.length - 1 ? ' border-b border-gray-100' : ''}`}
-									>
-										<div>
-											<p className="text-sm font-medium text-foreground">{name}</p>
-											<p className="text-xs text-muted-foreground mt-0.5">{num}</p>
-										</div>
-										<PhoneIcon className="size-3.5 text-muted-foreground shrink-0" />
-									</a>
-								))}
-							</div>
-						)}
+						<div style={{ display: activeTab === 'iletisim' ? 'block' : 'none' }}
+							className="mt-3 rounded-xl border border-gray-100 bg-gray-50 overflow-hidden">
+							{[
+								{ num: '+90 535 786 52 25', name: 'Suat Babur' },
+								{ num: '+90 533 717 02 39', name: 'Kamuran Babur' },
+								{ num: '+90 542 467 74 94', name: 'Özer Babur' },
+							].map(({ num, name }, i, arr) => (
+								<a
+									key={num}
+									href={`tel:${num.replace(/\s/g, '')}`}
+									className={`flex items-center justify-between px-4 py-3 hover:bg-gray-100 transition-colors${i < arr.length - 1 ? ' border-b border-gray-100' : ''}`}
+								>
+									<div>
+										<p className="text-sm font-medium text-foreground">{name}</p>
+										<p className="text-xs text-muted-foreground mt-0.5">{num}</p>
+									</div>
+									<PhoneIcon className="size-3.5 text-muted-foreground shrink-0" />
+								</a>
+							))}
+						</div>
 
-						{/* Lokasyon içeriği */}
-						{activeTab === 'lokasyon' && (
-							<div className="mt-3 rounded-xl overflow-hidden border border-gray-100" style={{ height: 180 }}>
-								<iframe
-									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5!2d29.4185469!3d40.7878458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cadfa135a29edb%3A0x229e2037e5c7fb89!2sBabur%20Mobilya%20%26%20Dekorasyon!5e0!3m2!1str!2str!4v1"
-									width="100%"
-									height="100%"
-									style={{ border: 0, display: 'block' }}
-									allowFullScreen
-									loading="lazy"
-									referrerPolicy="no-referrer-when-downgrade"
-								/>
-							</div>
-						)}
+						{/* Lokasyon içeriği — her zaman DOM'da, sayfa açılırken arka planda yüklensin */}
+						<div style={{ display: activeTab === 'lokasyon' ? 'block' : 'none', height: 180 }}
+							className="mt-3 rounded-xl overflow-hidden border border-gray-100">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5!2d29.4185469!3d40.7878458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cadfa135a29edb%3A0x229e2037e5c7fb89!2sBabur%20Mobilya%20%26%20Dekorasyon!5e0!3m2!1str!2str!4v1"
+								width="100%"
+								height="100%"
+								style={{ border: 0, display: 'block' }}
+								allowFullScreen
+								loading="eager"
+								referrerPolicy="no-referrer-when-downgrade"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

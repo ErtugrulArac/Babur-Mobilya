@@ -19,17 +19,17 @@ const LnSvg = () => (
 )
 
 const koleksiyonlar = [
-	{ title: 'Yaşam Alanları', href: '#' },
-	{ title: 'Ofis Mobilyaları', href: '#' },
-	{ title: 'Gardrop & Depolama', href: '#' },
-	{ title: 'Mutfak Üniteleri', href: '#' },
+	{ title: 'Yaşam Alanları', href: '/urunler' },
+	{ title: 'Ofis Mobilyaları', href: '/urunler' },
+	{ title: 'Gardrop & Depolama', href: '/urunler' },
+	{ title: 'Mutfak Üniteleri', href: '/urunler' },
 ];
 
 const kurumsal = [
-	{ title: 'Hakkımızda', href: '#' },
-	{ title: 'Referanslar', href: '#' },
-	{ title: 'Sıkça Sorulanlar', href: '#' },
-	{ title: 'İletişim', href: '#' },
+	{ title: 'Hakkımızda', href: '/hakkimizda' },
+	{ title: 'Referanslar', href: '/hakkimizda' },
+	{ title: 'Sıkça Sorulanlar', href: '/' },
+	{ title: 'İletişim', href: '/iletisim' },
 ];
 
 const socialLinks = [

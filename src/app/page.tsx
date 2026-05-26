@@ -53,12 +53,12 @@ export default function Home() {
       <ScrollExpandMedia
         mediaType="video"
         mediaSrc="/gardrop.mp4"
-        posterSrc="/gardrop1.png"
-        bgImageSrc="/gardrop1.png"
+        posterSrc="/gardrop1.webp"
+        bgImageSrc="/gardrop1.webp"
         logoSrc="/logo/baburlogo.png"
         mediaMobileSrc="/gardropresponsıve.mp4"
-        posterMobileSrc="/gardropresponsıve.png"
-        bgMobileImageSrc="/gardropresponsıve.png"
+        posterMobileSrc="/gardropresponsive.webp"
+        bgMobileImageSrc="/gardropresponsive.webp"
         date="Gardrop Koleksiyonu"
         scrollToExpand="Keşfetmek için kaydırın"
       >
