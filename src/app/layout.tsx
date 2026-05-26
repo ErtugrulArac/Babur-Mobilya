@@ -18,6 +18,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Babur Mobilya",
   description: "Evinizi Sanata Dönüştürün",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico", rel: "shortcut icon" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: { url: "/favicon/apple-touch-icon.png", sizes: "180x180" },
+  },
+  manifest: "/favicon/site.webmanifest",
 };
 
 export default function RootLayout({

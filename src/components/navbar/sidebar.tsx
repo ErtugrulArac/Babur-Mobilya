@@ -191,13 +191,15 @@ export const CurvedNavbar: React.FC<
 			<div className="h-full pt-24 flex flex-col justify-between">
 				<div className="flex flex-col text-5xl gap-3 mt-0 px-10 md:px-24">
 					<div className="border-b border-black/30 mb-0 pb-4">
-						<Image
-							src="/logo/baburlogo.png"
-							alt="Babur Mobilya Logo"
-							width={160}
-							height={60}
-							className="object-contain"
-						/>
+						<Link href="/">
+							<Image
+								src="/logo/baburlogo.png"
+								alt="Babur Mobilya Logo"
+								width={160}
+								height={60}
+								className="object-contain"
+							/>
+						</Link>
 					</div>
 					<section className="bg-transparent mt-0">
 						<div className="mx-auto max-w-7xl">
