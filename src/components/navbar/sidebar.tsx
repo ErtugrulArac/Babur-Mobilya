@@ -106,9 +106,6 @@ const NavLink: React.FC<iNavLinkProps> = ({
 		>
 			<Link ref={ref} onMouseMove={handleMouseMove} href={href}>
 				<div className="relative flex items-start">
-					<span className="text-black transition-colors duration-500  text-4xl font-thin mr-2">
-						{index}.
-					</span>
 					<div className="flex flex-row gap-2">
 						<motion.span
 							variants={{
@@ -120,7 +117,8 @@ const NavLink: React.FC<iNavLinkProps> = ({
 								staggerChildren: 0.075,
 								delayChildren: 0.25,
 							}}
-							className="relative z-10 block text-4xl font-extralight text-black transition-colors duration-500  md:text-4xl"
+							className="relative z-10 block text-4xl font-medium text-black transition-colors duration-500  md:text-4xl"
+							style={{ fontFamily: "var(--font-poppins)" }}
 						>
 							{heading.split("").map((letter, i) => {
 								return (
